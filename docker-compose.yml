@@ -1,0 +1,68 @@
+version: '3.7'
+
+services:
+  visjo:
+    container_name: visjo
+    image: visjo:latest
+    volumes:
+      - ${REPO_PATH}/:/home/visjo:rw
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL}
+      - VISJO_PORT=${VISJO_PORT}
+      - PICTSHARE_HOST=pictshare
+      - PICTSHARE_PORT=80
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - MAX_UPLOAD_SIZE=${MAX_UPLOAD_SIZE}MB
+    ports:
+      - "8080:${VISJO_PORT}"  # Target port
+    networks:
+      visjo-net:
+        aliases:
+          - ${VISJO_HOST}
+    depends_on:
+      - pictshare
+      - postgres
+
+  pictshare:
+    container_name: visjo-pictshare
+    image: hascheksolutions/pictshare:latest
+    volumes:
+      - visjo-pictshare-data:/usr/share/nginx/html/data
+    environment:
+      - URL=ps/ # Prefix
+      - MAX_UPLOAD_SIZE=${MAX_UPLOAD_SIZE}  # MB
+    expose:
+      - "${PICTSHARE_PORT}"
+    networks:
+      visjo-net:
+        aliases:
+          - ${PICTSHARE_HOST}
+
+  postgres:
+    container_name: visjo-postgres
+    image: postgres:9.5-alpine
+    volumes:
+      - visjo-postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432" # TODO remove on production
+    networks:
+      visjo-net:
+        aliases:
+          - ${POSTGRES_HOST}
+
+volumes:
+  visjo-postgres-data:
+  visjo-pictshare-data:
+
+networks:
+  visjo-net:
+    name: visjo-net
+    driver: bridge
