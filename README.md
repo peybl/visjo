@@ -12,4 +12,5 @@ Follow the steps in https://nickjanetakis.com/blog/setting-up-docker-for-windows
 
 Open the Project in WSL: https://code.visualstudio.com/docs/remote/wsl#_open-a-folder-in-wsl
 
-Execute scripts in folder /scripts
+Execute scripts in folder /scripts (NOTICE: file endings have to be LF, otherwise the scripts won't work)
+
