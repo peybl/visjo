@@ -1,6 +1,8 @@
 FROM openjdk:11-jdk-slim
 
-RUN apt-get update --fix-missing && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get -y autoremove && apt-get -y clean && \
+RUN apt-get update --fix-missing && apt-get -y upgrade && apt-get -y dist-upgrade && \
+    apt-get -y install curl && \
+    apt-get -y autoremove && apt-get -y clean && \
     mkdir /home/visjo
 
 COPY visjo-backend/docker/visjo-ini.sh /home/
