@@ -90,7 +90,8 @@ public class ImageResource {
 	@PostMapping(consumes = { "multipart/form-data" })
 	public ResponseEntity createImage(Principal principal, @RequestParam("journeyId") long journeyId,
 			@RequestParam("latitude") @Min(-90) @Max(90) double latitude,
-			@RequestParam("longitude") @Min(-180) @Max(180) double longitude, @RequestParam("file") MultipartFile file) {
+			@RequestParam("longitude") @Min(-180) @Max(180) double longitude, @RequestParam("timestamp") String timestamp,
+			@RequestParam("file") MultipartFile file) {
 
 		long userId = UserContext.getActiveUserId(principal);
 
@@ -101,7 +102,8 @@ public class ImageResource {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not read file data");
 		}
 
-		Image image = imageService.uploadImage(userId, journeyId, file.getOriginalFilename(), fileData, latitude, longitude);
+		Image image = imageService.uploadImage(userId, journeyId, file.getOriginalFilename(), fileData, latitude, longitude,
+											   timestamp);
 		ImageDto dto = modelMapper.map(image, ImageDto.class);
 
 		return new ResponseEntity(dto, HttpStatus.CREATED);

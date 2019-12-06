@@ -2,18 +2,20 @@ package at.tu.visjo.persistence.model;
 
 import at.tu.visjo.util.Utils;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "user_account")
 @Data
+@NoArgsConstructor
 public class User implements Model {
 
 	@Id
@@ -33,19 +35,18 @@ public class User implements Model {
 			false))
 	private List<Role> roles = new ArrayList<>();
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
-	private Date timestamp;
-
-	public User() {
-		this.timestamp = new Date();
-	}
+	private LocalDateTime createdTimestamp;
 
 	public User(@NonNull String username, @NonNull String password, @NonNull List<Role> roles) {
 		this.username = username;
 		this.password = password;
 		this.roles = roles;
-		this.timestamp = new Date();
+	}
+
+	@PrePersist
+	public void setCreationDateTime() {
+		this.createdTimestamp = LocalDateTime.now();
 	}
 
 	@Override
@@ -58,8 +59,8 @@ public class User implements Model {
 			   .append(", password=CONFIDENTIAL")
 			   .append(", roles=[")
 			   .append(Utils.modelsToString(roles))
-			   .append("], timestamp=")
-			   .append(timestamp)
+			   .append("], createdTimestamp=")
+			   .append(createdTimestamp)
 			   .append(")");
 		return builder.toString();
 	}

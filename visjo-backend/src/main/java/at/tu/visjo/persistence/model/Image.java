@@ -1,15 +1,18 @@
 package at.tu.visjo.persistence.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Image implements Model {
 
 	@Id
@@ -35,12 +38,15 @@ public class Image implements Model {
 	@Max(180)
 	private double longitude;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
-	private Date timestamp;
+	private ZonedDateTime timestamp;
 
-	public Image() {
-		this.timestamp = new Date();
+	@NotNull
+	private LocalDateTime createdTimestamp;
+
+	@PrePersist
+	public void setCreationDateTime() {
+		this.createdTimestamp = LocalDateTime.now();
 	}
 
 	@Override
@@ -60,6 +66,8 @@ public class Image implements Model {
 			   .append(longitude)
 			   .append(", timestamp=")
 			   .append(timestamp)
+			   .append(", createdTimestamp=")
+			   .append(createdTimestamp)
 			   .append(")");
 		return builder.toString();
 	}

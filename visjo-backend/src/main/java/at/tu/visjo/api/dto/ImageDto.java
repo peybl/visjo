@@ -9,4 +9,5 @@ public class ImageDto {
 	private long journey;
 	private double latitude;
 	private double longitude;
+	private String timestamp;
 }

@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +52,7 @@ public class ImageService {
 	}
 
 	public Image uploadImage(long userId, long journeyId, @NonNull String fileName, byte[] fileData, double latitude,
-			double longitude) {
+			double longitude, String timestamp) {
 
 		User user = userRepository.findById(userId)
 								  .get();
@@ -60,12 +62,21 @@ public class ImageService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No journey with this ID found for the current user");
 		}
 
+		ZonedDateTime utc;
+		try {
+			utc = ZonedDateTime.parse(timestamp);
+		} catch (DateTimeParseException e) {
+			log.error("Could not parse timestamp '{}'", timestamp);
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The timezone format is invalid");
+		}
+
 		// Prepare image
 		Image image = new Image();
 		image.setUser(user);
 		image.setJourney(journey.get());
 		image.setLatitude(latitude);
 		image.setLongitude(longitude);
+		image.setTimestamp(utc);
 
 		image = serviceConnector.uploadFile(image, fileName, fileData);
 		log.debug("Created: {}", image);

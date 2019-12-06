@@ -36,11 +36,12 @@
         }
 
         function uploadFile(file) {
-            var data = new FormData();
+            const data = new FormData();
             data.append('file', file, file.name);
             data.append('journeyId', '5');
             data.append('latitude', '1.1');
             data.append('longitude', '2.2');
+            data.append('timestamp', getUtcString());
 
             $.ajax({
                 url: '/image',
@@ -59,6 +60,25 @@
              });
         }
 
+        function getUtcString() {
+            const now = new Date();
+            const utc = [];
+            utc.push(now.getFullYear());
+            utc.push('-');
+            utc.push(('0' + (now.getMonth() + 1)).slice(-2));
+            utc.push('-');
+            utc.push(('0' + now.getDate()).slice(-2));
+            utc.push('T');
+            utc.push(('0' + now.getHours()).slice(-2));
+            utc.push(':');
+            utc.push(('0' + now.getMinutes()).slice(-2));
+            utc.push(':');
+            utc.push(('0' + now.getSeconds()).slice(-2));
+            utc.push('+');
+            utc.push(('0' + now.getTimezoneOffset() / -60).slice(-2));
+            return utc.join('');
+        }
+
         function fetchImage(id) {
             $.get('/image/' + id)
              .done(function (image) {
@@ -72,11 +92,11 @@
         function fetchAllImagesOfJourney(journeyId) {
             $.get('/image/journey/' + journeyId)
              .done(function (images) {
-                 var container = $('#all-journey-images');
+                 const container = $('#all-journey-images');
                  container.append('<p>All images of journey with id=' + journeyId + ' are:</p>');
 
                  if (images != null && images.length > 0) {
-                     var list = '<ul>';
+                     let list = '<ul>';
                      images.forEach(function (image) {
                          list += '<li>Image-ID = ' + image.id +
                              '<br/><img src="/image/' + image.id + '?width=150" /></li>';
