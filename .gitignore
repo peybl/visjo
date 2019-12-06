@@ -123,3 +123,6 @@ fabric.properties
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+
+# Node (managed by Docker (i think?))
+visjo-frontend/src/main/angular/node/*
