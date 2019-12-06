@@ -73,14 +73,14 @@ public class ImageService {
 		return image;
 	}
 
-	public Pair<byte[], String> downloadImage(long userId, long imageId) {
+	public Pair<byte[], String> downloadImage(long userId, long imageId, Integer width) {
 		Optional<Image> image = imageRepository.findByIdAndUserId(imageId, userId);
 		if (image.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No image with this ID found for the current user");
 		}
 
 		return serviceConnector.downloadFile(image.get()
-												  .getUrl());
+												  .getUrl(), width);
 	}
 
 	public void deleteImage(long userId, long imageId) {

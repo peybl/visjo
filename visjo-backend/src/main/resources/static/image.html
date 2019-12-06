@@ -79,7 +79,7 @@
                      var list = '<ul>';
                      images.forEach(function (image) {
                          list += '<li>Image-ID = ' + image.id +
-                             '<br/><img src="/image/' + image.id + '" style="max-width: 150px" /></li>';
+                             '<br/><img src="/image/' + image.id + '?width=150" /></li>';
                      });
                      list += '</ul>';
                      container.append(list);

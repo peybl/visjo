@@ -66,7 +66,11 @@ public class PictShareServiceConnector implements ServiceConnector {
 	}
 
 	@Override
-	public Pair<byte[], String> downloadFile(@NonNull String url) {
+	public Pair<byte[], String> downloadFile(@NonNull String url, @Nullable Integer width) {
+		if (width != null) {
+			url = extendUri(url, width.toString());
+		}
+
 		return connector.downloadFile(url);
 	}
 
@@ -98,5 +102,11 @@ public class PictShareServiceConnector implements ServiceConnector {
 		}
 
 		return response;
+	}
+
+	private String extendUri(@NonNull String uri, @NonNull String extension) {
+		String[] parts = uri.split("/");
+		parts[parts.length - 1] = extension + "/" + parts[parts.length - 1];
+		return String.join("/", parts);
 	}
 }

@@ -59,10 +59,12 @@ public class ImageResource {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<byte[]> getForUser(Principal principal, @PathVariable("id") long imageId) {
+	public ResponseEntity<byte[]> getForUser(Principal principal, @PathVariable("id") long imageId,
+			@RequestParam(name = "width", required = false) @Min(1) Integer width) {
+
 		long userId = UserContext.getActiveUserId(principal);
 
-		Pair<byte[], String> data = imageService.downloadImage(userId, imageId);
+		Pair<byte[], String> data = imageService.downloadImage(userId, imageId, width);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType(data.getSecond()));
