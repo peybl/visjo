@@ -126,3 +126,5 @@ fabric.properties
 
 # Node (managed by Docker (i think?))
 visjo-frontend/src/main/angular/node/*
+
+package-lock.json
