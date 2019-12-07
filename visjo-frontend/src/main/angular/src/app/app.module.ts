@@ -11,7 +11,8 @@ import {ErrorPageComponent} from './error-page/error-page.component';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { JourneyViewComponent } from './journey-view/journey-view.component';
-import { JourneyOverviewComponent } from './home/journey-overview/journey-overview.component'
+import { JourneyOverviewComponent } from './home/journey-overview/journey-overview.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { JourneyOverviewComponent } from './home/journey-overview/journey-overvi
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
