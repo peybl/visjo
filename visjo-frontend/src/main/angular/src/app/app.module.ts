@@ -8,13 +8,19 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HomeComponent} from './home/home.component';
 import {HttpClientModule} from '@angular/common/http';
 import {ErrorPageComponent} from './error-page/error-page.component';
+import { CreateComponent } from './create/create.component';
+import { EditComponent } from './edit/edit.component';
+import { JourneyViewComponent } from './journey-view/journey-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    CreateComponent,
+    EditComponent,
+    JourneyViewComponent
   ],
   imports: [
     BrowserModule,
