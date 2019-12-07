@@ -11,6 +11,7 @@ import {ErrorPageComponent} from './error-page/error-page.component';
 import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { JourneyViewComponent } from './journey-view/journey-view.component';
+import { JourneyOverviewComponent } from './home/journey-overview/journey-overview.component'
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { JourneyViewComponent } from './journey-view/journey-view.component';
     ErrorPageComponent,
     CreateComponent,
     EditComponent,
-    JourneyViewComponent
+    JourneyViewComponent,
+    JourneyOverviewComponent
   ],
   imports: [
     BrowserModule,
