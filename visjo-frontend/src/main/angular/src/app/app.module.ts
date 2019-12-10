@@ -13,6 +13,7 @@ import { EditComponent } from './edit/edit.component';
 import { JourneyViewComponent } from './journey-view/journey-view.component';
 import { JourneyOverviewComponent } from './home/journey-overview/journey-overview.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { MessageviewComponent } from './messageview/messageview.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     CreateComponent,
     EditComponent,
     JourneyViewComponent,
-    JourneyOverviewComponent
+    JourneyOverviewComponent,
+    MessageviewComponent
   ],
   imports: [
     BrowserModule,
