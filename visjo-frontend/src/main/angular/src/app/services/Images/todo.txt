@@ -1,0 +1,2 @@
+maybe this helps:
+https://angular.io/guide/http#listening-to-progress-events
