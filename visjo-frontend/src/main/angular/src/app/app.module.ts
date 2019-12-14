@@ -15,6 +15,7 @@ import { JourneyOverviewComponent } from './home/journey-overview/journey-overvi
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageviewComponent } from './messageview/messageview.component';
 import { JourneyService } from './services/Journey/journey.service';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { JourneyService } from './services/Journey/journey.service';
     EditComponent,
     JourneyViewComponent,
     JourneyOverviewComponent,
-    MessageviewComponent
+    MessageviewComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
