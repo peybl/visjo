@@ -12,8 +12,9 @@ import { CreateComponent } from './create/create.component';
 import { EditComponent } from './edit/edit.component';
 import { JourneyViewComponent } from './journey-view/journey-view.component';
 import { JourneyOverviewComponent } from './home/journey-overview/journey-overview.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageviewComponent } from './messageview/messageview.component';
+import { JourneyService } from './services/Journey/journey.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { MessageviewComponent } from './messageview/messageview.component';
     ReactiveFormsModule,
     NgbModule
   ],
-  providers: [],
+  providers: [JourneyService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
