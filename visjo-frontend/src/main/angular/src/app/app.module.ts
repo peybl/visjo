@@ -16,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageviewComponent } from './messageview/messageview.component';
 import { JourneyService } from './services/Journey/journey.service';
 import { NavbarComponent } from './navbar/navbar.component';
+import { NgFontawesomeModule } from "ng-fontawesome-icon";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    NgFontawesomeModule
   ],
   providers: [JourneyService],
   bootstrap: [AppComponent]
