@@ -1,1 +1,43 @@
-<p>create works!</p>
+<br/>
+<form [formGroup]="journeyForm">
+    <div class="form-group">
+        <label for="title">Journey title</label>
+        <input formControlName="title" class="form-control" type="text" id="title" />
+    </div>
+
+    <ul class="shadow-sm p-3 mb-5 bg-white rounded">
+        <li class="row" style="list-style:none; background-image:none; background-repeat:none; background-position:0;"
+            *ngFor="let image of arrayImages; let i = index">
+            <div class="form-group col-4" style="margin: auto 0;">
+                <img src="{{images[i]}}" class="img-fluid" alt="image.title"/>
+            </div>
+            <div class="col-8">
+                <div class="form-group">
+                    <label for="title-{{i}}">Filename</label>
+                    <input id="title-{{i}}" class="form-control" type="text" value="{{image.title}}" />
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="lat-{{i}}">Latitude</label>
+                        <input id="lat-{{i}}" class="form-control" type="text" value="{{image.lat}}" />
+                    </div>
+
+                    <div class="col">
+                        <label for="long-{{i}}">Longitude</label>
+                        <input id="long-{{i}}" class="form-control" type="text" value="{{image.long}}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="date-{{i}}">Date</label>
+                    <input id="date-{{i}}" class="form-control" type="text" value="{{image.date}}" />
+                </div>
+            </div>
+            <hr class="col-12" style="margin:10px; padding:0px">
+        </li>
+    </ul>
+
+    <label for="upload">Upload Images</label>
+    <input style="display: none" type="file" (change)="onFileChanged($event)" multiple #fileInput>
+    <button id="upload" (click)="fileInput.click()">Select File</button>
+    <button (click)="onUpload()">Upload!</button>
+</form>
