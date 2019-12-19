@@ -13,7 +13,7 @@
             </div>
             <div class="col-8">
                 <div class="form-group">
-                    <label for="title-{{i}}">Filename</label>
+                    <label for="title-{{i}}">Title</label>
                     <input id="title-{{i}}" class="form-control" type="text" value="{{image.title}}" />
                 </div>
                 <div class="form-group row">
@@ -36,8 +36,11 @@
         </li>
     </ul>
 
-    <label for="upload">Upload Images</label>
-    <input style="display: none" type="file" (change)="onFileChanged($event)" multiple #fileInput>
-    <button id="upload" (click)="fileInput.click()">Select File</button>
-    <button (click)="onUpload()">Upload!</button>
+    <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="Image select">
+            <input style="display: none" type="file" (change)="onFileChanged($event)" multiple #fileInput>
+            <button id="upload" class="btn btn-light" (click)="fileInput.click()">Select File</button>
+            <button class="btn btn-primary" (click)="onUpload()">Upload!</button>
+        </div>
+    </div>
 </form>
