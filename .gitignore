@@ -128,3 +128,7 @@ fabric.properties
 visjo-frontend/src/main/angular/node/*
 
 package-lock.json
+
+node_modules/font-awesome/fonts/fontawesome-webfont.ttf
+
+node_modules/font-awesome/fonts/fontawesome-webfont.eot

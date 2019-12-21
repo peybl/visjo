@@ -1,9 +1,8 @@
-<h1>Greeting</h1>
-<div [hidden]="!authenticated()">
-  <p>Yeah you are logged in!</p>
-</div>
 <div [hidden]="authenticated()">
-  <p>Login to see your greeting</p>
+  <h2>Welcome to VisJo! Sign in to see your Journey Overview!</h2>
 </div>
+<div [hidden]="!authenticated()">
+    <h2>Your Journey Overview</h2>
+  </div>
 
 <app-journey-overview></app-journey-overview>
