@@ -1,13 +1,17 @@
-<div class="row justify-content-center">
+ <div *ngIf="authenticated()" class="row justify-content-center">
+<!-- <div class="row justify-content-center">  -->
     <div class="journey-list" *ngFor="let journey of journeys">
         <div class="col-sm-12">
             <div class="card text-center text-white bg-dark mb-3">
-                <div class="card-header">
+                <div class="card-header" container-fluid>
+                    <button class="share-icon" mat-icon-button>
+                        <mat-icon (click)="onClickShare()" aria-hidden="false" aria-label="share icon">share</mat-icon>
+                    </button>
                     {{journey.name}}
-                    <ng-fontawesome (click)="onClickEdit()" class="edit-icon" icon="share-alt" size="1.5" color="white"></ng-fontawesome>
-                    <ng-fontawesome (click)="onClickShare()" class="share-icon" icon="edit" size="1.5" color="white"></ng-fontawesome>
+                    <button class="edit-icon" mat-icon-button>
+                        <mat-icon (click)="onClickEdit()" aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                    </button>
                 </div>
-                
                 <img src={{journey.images[0].source}}>
                 <div class="card-footer text-muted">
                     <div *ngIf="journey.description; else elseBlock">{{journey.description}}</div>

@@ -1,6 +1,6 @@
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand"
+        <a class="navbar-brand brand-name"
             routerLink="">Visjo</a>
 
         <div class="collapse navbar-collapse"
@@ -8,9 +8,7 @@
 
         <ul class="nav navbar-nav mr-auto">
             <li class="nav-item">
-            <a class="nav-link" routerLink="/home" routerLinkActive="active">
-                Home
-            </a>
+            <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
             </li>
             <li class="nav-item">
             <a class="nav-link" routerLink="/create" routerLinkActive="active">Create</a>
@@ -34,11 +32,11 @@
                         <div class="container-fluid bg-dark text-light">
                             <form class="form-signin" role="form" (submit)="login()">
                                 <div class="form-group">
-                                    <label class="">Username</label>
+                                    <label class="sr-only" for="username">Username</label>
                                     <input [(ngModel)]="credentials.username" class="form-control" name="username" id="username" type="text">
                                 </div>
                                 <div class="form-group">
-                                    <label class="">Password</label>
+                                    <label class="sr-only" for="username">Password</label>
                                     <input [(ngModel)]="credentials.password" class="form-control" name="password" id="password" type="password">
                                     <br>
                                 </div>
@@ -53,10 +51,10 @@
             </li>
             <ng-template #logoutView>
                 <li class="nav-item">
-                    <a class="navbar-brand">Welcome, {{credentials.username}}!</a>
+                    <a class="navbar-brand">{{credentials.username}}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/home" (click)="logout()" routerLinkActive="active">
+                    <a href="#" class="nav-link" (click)="logout()" routerLinkActive="active">
                         Sign Out
                     </a>
                 </li>
