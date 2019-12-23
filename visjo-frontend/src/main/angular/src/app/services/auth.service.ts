@@ -38,13 +38,15 @@ export class AuthService {
   }
 
   fetchUsername(): string {
-    this.http.get('http://localhost:8080/user', {}).pipe().subscribe(
-      response => {
-        this.username = response['name'];
-        this.authenticated = true;
-      },
-      err => console.error('Could not get username', err)
-    );
-    return this.username;
+    if (this.username) {
+      this.http.get('http://localhost:8080/user', {}).pipe().subscribe(
+        response => {
+          this.username = response['name'];
+          this.authenticated = true;
+        },
+        err => console.error('Could not get username', err)
+      );
+      return this.username;
+    }
   }
 }

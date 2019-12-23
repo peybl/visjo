@@ -3,12 +3,14 @@
     height: 24rem;
 }
 
-.card-header .share-icon {
+.share-icon {
     position: absolute;
-    right: 10px;
+    left: 10px;
+    margin-top: -8px;
 }
 
-.card-header .edit-icon {
+.edit-icon {
     position: absolute;
-    right: 45px;
+    right: 10px;
+    margin-top: -8px;
 }

@@ -1,8 +1,20 @@
 <div [hidden]="authenticated()">
-  <h2>Welcome to VisJo! Sign in to see your Journey Overview!</h2>
+
+  <div class="container">
+    <br/>
+    <br/>
+    <br/>
+    <h1>Visjo!</h1>
+    <br/>
+</div>
 </div>
 <div [hidden]="!authenticated()">
-    <h2>Your Journey Overview</h2>
-  </div>
+  <br/>
+  <h2 class="overview">Journey Overview</h2>
+  <br/>
+</div>
 
 <app-journey-overview></app-journey-overview>
+<div [hidden]="authenticated()">
+    <img src="../../assets/images/background.png" width="930px" alt="">
+</div>
