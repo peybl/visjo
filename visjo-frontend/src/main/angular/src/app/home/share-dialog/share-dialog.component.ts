@@ -18,7 +18,7 @@ export class ShareDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  OnCopyClick(inputElement: any): void {
+  onCopyClick(inputElement: any): void {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0,0);
