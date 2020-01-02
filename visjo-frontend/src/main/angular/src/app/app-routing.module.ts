@@ -37,6 +37,10 @@ const routes: Routes = [
   {
     path: 'journeyView',
     component: JourneyViewComponent
+  },
+  {
+    path: 'journeyView/:id',
+    component: JourneyViewComponent
   }
 
 ];

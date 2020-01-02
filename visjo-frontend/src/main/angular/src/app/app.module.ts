@@ -16,7 +16,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessageviewComponent } from './messageview/messageview.component';
 import { JourneyService } from './services/Journey/journey.service';
 import { NavbarComponent } from './navbar/navbar.component';
-import { NgFontawesomeModule } from "ng-fontawesome-icon";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule, MatButtonModule, MatDialogModule } from '@angular/material';
+import { ShareDialogComponent } from './home/share-dialog/share-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { NgFontawesomeModule } from "ng-fontawesome-icon";
     JourneyViewComponent,
     JourneyOverviewComponent,
     MessageviewComponent,
-    NavbarComponent
+    NavbarComponent,
+    ShareDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -38,10 +41,14 @@ import { NgFontawesomeModule } from "ng-fontawesome-icon";
     HttpClientModule,
     ReactiveFormsModule,
     NgbModule,
-    NgFontawesomeModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [JourneyService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ShareDialogComponent]
 })
 export class AppModule {
 }

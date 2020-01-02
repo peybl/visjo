@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { JourneyService } from 'src/app/services/Journey/journey.service';
 import { Journey } from '../../dtos/Journey';
 import { Image } from '../../dtos/Image';
+import { AuthService } from 'src/app/services/auth.service';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
 
 @Component({
   selector: 'app-journey-overview',
@@ -10,6 +13,8 @@ import { Image } from '../../dtos/Image';
   styles: [` .img-fluid{ min-width:100%}`]
 })
 export class JourneyOverviewComponent implements OnInit {
+
+  shareLinkDialogRef: MatDialogRef<ShareDialogComponent>;
   emptyJourneyDescription: string;
   
   images1: Image[] = [
@@ -36,25 +41,26 @@ export class JourneyOverviewComponent implements OnInit {
     {id: '2', name: 'My Journey-3', description: 'Another journey description', images: this.images3}
   ];
 
-  constructor(private journeyService: JourneyService) { }
+  constructor(private dialog: MatDialog, private journeyService: JourneyService, private auth: AuthService) {
+    auth.fetchUsername();
+  }
 
   ngOnInit() {
     this.emptyJourneyDescription = "...";
   }
-
-  getJourneys(): void {
-
-  }
   
+  authenticated() {
+    return this.auth.authenticated;
+  }
 
   onClickEdit() {
     console.log("edit icon clicked!");
-    //edit journey
+    //link to edit journey
   }
 
   onClickShare() {
     console.log("share icon clicked!");
-    //create a shareable link in a window
+    this.shareLinkDialogRef = this.dialog.open(ShareDialogComponent);
   }
 
 }

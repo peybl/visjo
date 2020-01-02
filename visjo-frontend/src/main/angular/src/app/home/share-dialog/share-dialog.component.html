@@ -1,0 +1,8 @@
+<h1 class="title" mat-dialog-title>Share your journey!</h1>
+<div mat-dialog-content>
+<input type="text" value="{{link}}" #input>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCloseClick()">Close</button>
+    <button color="warn" mat-button (click)="onCopyClick(input)" cdkFocusInitial>Copy</button>
+</div>

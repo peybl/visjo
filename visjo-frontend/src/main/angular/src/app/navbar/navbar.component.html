@@ -1,6 +1,6 @@
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand"
+        <a class="navbar-brand brand-name"
             routerLink="">Visjo</a>
 
         <div class="collapse navbar-collapse"
@@ -8,9 +8,7 @@
 
         <ul class="nav navbar-nav mr-auto">
             <li class="nav-item">
-            <a class="nav-link" routerLink="/home" routerLinkActive="active">
-                Home
-            </a>
+            <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
             </li>
             <li class="nav-item">
             <a class="nav-link" routerLink="/create" routerLinkActive="active">Create</a>
@@ -24,20 +22,42 @@
         </ul>
 
         <ul class="navbar-nav ml-auto">
-            <li *ngIf="!authenticated(); else logoutView" class="nav-item">
-            <a class="nav-link" routerLink="/login" routerLinkActive="active">
-                Login
-                <i aria-hidden="true" class="fa fa-sign-in"></i>
-            </a>
-            </li>
-
-            <ng-template #logoutView>
-            <li class="nav-item">
-                <a (click)="logout()">
-                Logout
-                <i aria-hidden="true" class="fa fa-sign-in"></i>
+            <li *ngIf="!authenticated(); else logoutView" class="nav-item dropdown">
+                <a href="#" class="nav-link" data-toggle="dropdown" role="button">
+                    Sign In<span class="caret"></span>
                 </a>
+
+                <div class="dropdown-menu dropdown-menu-right bg-dark" id="formLogin">
+                    <div class="container-fluid bg-dark text-light">
+                        <div class="container-fluid bg-dark text-light">
+                            <form class="form-signin" role="form" (submit)="login()">
+                                <div class="form-group">
+                                    <label class="sr-only" for="username">Username</label>
+                                    <input [(ngModel)]="credentials.username" class="form-control" name="username" id="username" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="username">Password</label>
+                                    <input [(ngModel)]="credentials.password" class="form-control" name="password" id="password" type="password">
+                                    <br>
+                                </div>
+                                <div [hidden]="!error" class="alert alert-danger" role="alert">
+                                    Wrong credentials entered.
+                                </div>
+                                <button type="submit" id="btnLogin" class="btn btn-light btn-sm">Login</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </li>
+            <ng-template #logoutView>
+                <li class="nav-item">
+                    <a class="navbar-brand">{{credentials.username}}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" (click)="logout()" routerLinkActive="active">
+                        Sign Out
+                    </a>
+                </li>
             </ng-template>
         </ul>
         </div>
