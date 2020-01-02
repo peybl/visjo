@@ -5,7 +5,7 @@ export class ABaseService {
     constructor(protected messageService: MessagesService) { }
 
     protected log(message: string) {
-        this.messageService.add("HeroService:" + message);
+        this.messageService.add(this.constructor.name + ": " + message);
     }
 
     /**
