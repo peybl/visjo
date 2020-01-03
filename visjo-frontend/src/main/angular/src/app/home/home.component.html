@@ -1,20 +1,17 @@
 <div [hidden]="authenticated()">
-
   <div class="container">
     <br/>
     <br/>
     <br/>
     <h1>Visjo!</h1>
     <br/>
+  </div>
+  <img src="../../assets/images/background.png" width="930px" alt="background-image">
 </div>
-</div>
+
 <div [hidden]="!authenticated()">
   <br/>
   <h2 class="overview">Journey Overview</h2>
   <br/>
-</div>
-
-<app-journey-overview></app-journey-overview>
-<div [hidden]="authenticated()">
-    <img src="../../assets/images/background.png" width="930px" alt="">
+  <app-journey-overview></app-journey-overview>
 </div>

@@ -10,7 +10,7 @@ import { Journey } from '../dtos/Journey';
 export class JourneyViewComponent implements OnInit {
 
   @Input()
-  private selectedJourneyId : string;
+  private selectedJourneyId : number;
   private selectedJourney : Journey;
 
   constructor(private journeyService: JourneyService) { }
@@ -19,7 +19,7 @@ export class JourneyViewComponent implements OnInit {
     //this.getJourney(this.selectedJourneyId);
   }
 
-  getJourney(journeyId: string) : void {
-    this.journeyService.getJourneyById(journeyId).subscribe(j => this.selectedJourney = j);
+  async getJourney(journeyId: number) : Promise<void> {
+    this.selectedJourney = await this.journeyService.getJourneyById(journeyId);
   }
 }
