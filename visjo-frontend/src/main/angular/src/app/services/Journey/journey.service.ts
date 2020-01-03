@@ -42,12 +42,17 @@ export class JourneyService extends ABaseService {
       );
   }
 
-  postNewJourney(journey: Journey): Observable<Journey> {
+  postNewJourney(journeyOrName: Journey | string): Observable<Journey> {
+    let name : string;
+    if (typeof journeyOrName === "string")
+      name = journeyOrName;
+    else
+      name = journeyOrName.name;
     const formData = new FormData();
-    formData.append("name", journey.name);
+    formData.append("name", name);
     return this.http.post<Journey>(this.journeyUrlBase, formData)
       .pipe(
-        tap(() => this.log("added new Journey: " + journey.name)),
+        tap(() => this.log("added new Journey: " + name)),
         catchError(this.handleError<Journey>("post new Journey"))
       );
   }
