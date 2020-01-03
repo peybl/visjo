@@ -1,7 +1,7 @@
 <p>create works!</p>
 
-<div *ngIf="(lastAddedJourney$ | async)">
-    Added a new journey with id: {{(lastAddedJourney$ | async).id}} and name: {{(lastAddedJourney$ | async).name}}
+<div *ngIf="lastAddedJourney">
+    Added a new journey with id: {{lastAddedJourney.id}} and name: {{lastAddedJourney.name}}
 </div>
 
 <button (click)="createAndUploadNewEmptyJourney()">

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./create.component.sass']
 })
 export class CreateComponent implements OnInit {
-  lastAddedJourney$ : Observable<Journey>;
+  lastAddedJourney : Journey;
 
   constructor(private journeyService: JourneyService) { }
 
@@ -20,9 +20,11 @@ export class CreateComponent implements OnInit {
     const newj : Journey = {name: "new journey " + Math.ceil(Math.random() * 100)};
     console.debug("new journey:");
     console.debug(newj);
-    this.lastAddedJourney$ = this.journeyService.postNewJourney(newj);
+    this.journeyService.postNewJourney(newj).subscribe(
+      response => this.lastAddedJourney = response
+    );
     console.debug("last added journey:");
-    console.debug(this.lastAddedJourney$);
+    console.debug(this.lastAddedJourney);
   }
 
 }
