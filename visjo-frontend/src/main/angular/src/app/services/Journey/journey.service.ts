@@ -11,6 +11,12 @@ import { ABaseService } from '../AbstractServices/ABaseService';
 export class JourneyService extends ABaseService {
   private journeyUrlBase = "/journey";
 
+  allJourneys : Journey[] = [];
+  requestedJourney: Journey;
+  createdJourney: Journey;
+  deletedJourney: Journey;
+  searchResults: Journey[] = [];
+
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -21,7 +27,6 @@ export class JourneyService extends ABaseService {
   }
 
   getJourneys(): Journey[] {
-    let journeys: Journey[];
     this.http.get<Journey[]>(this.journeyUrlBase)
       .pipe(
         tap(() => this.log("fetched Journeys")),
@@ -29,16 +34,15 @@ export class JourneyService extends ABaseService {
       ).subscribe(
         response => {
           console.debug("server respone: " + response);
-          journeys = response;
+          this.allJourneys = response;
         }, error => {
           console.error("error fetching Journeys: " + error);
-        }
+        },
       );
-    return journeys;
+    return this.allJourneys;
   }
 
   getJourneyById(id: number): Journey {
-    let j: Journey;
     const url = this.journeyUrlBase + "/" + id;
     this.http.get<Journey>(this.journeyUrlBase)
       .pipe(
@@ -50,31 +54,30 @@ export class JourneyService extends ABaseService {
         catchError(this.handleError<Journey>("get Journey with ID: " + id))
       ).subscribe(response => {
         console.debug("server respone: " + response);
-        j = response;
+        this.requestedJourney = response;
       }, error => {
         console.error("error fetching Journey with id: " + id+ ": " + error);
       });
-    return j;
+    return this.requestedJourney;
   }
 
   postNewJourney(journey: Journey): Journey {
-    let newJourney: Journey;
-    this.http.post<Journey>(this.journeyUrlBase, journey, this.httpOptions)
+    const journeyToPost : Journey = {name: journey.name};
+    this.http.post<Journey>(this.journeyUrlBase, journeyToPost, this.httpOptions)
       .pipe(
         tap(() => this.log("added new Journey: " + journey.name)),
         catchError(this.handleError<Journey>("post new Journey"))
       ).subscribe(response => {
         console.debug("server respone: " + response);
-        newJourney = response;
+        this.createdJourney = response;
       }, error => {
         console.error("error posting new Journey " + journey.name+ ": " + error);
       });
-    return newJourney;
+    return this.createdJourney;
   }
 
   // ! NYI in backend
   deleteJourney(journey: Journey | number): Journey {
-    let deletedJourney: Journey;
     const id = typeof journey === "number" ? journey : journey.id;
     const url = this.journeyUrlBase + "/" + id;
     this.http.delete<Journey>(url, this.httpOptions)
@@ -83,16 +86,15 @@ export class JourneyService extends ABaseService {
         catchError(this.handleError<Journey>("delete journey"))
       ).subscribe(response => {
         console.debug("server respone: " + response);
-        deletedJourney = response;
+        this.deletedJourney = response;
       }, error => {
         console.error("error deleting Journey " + id + ": " + error);
       });
-    return deletedJourney;
+    return this.deletedJourney;
   }
 
   // ! NYI in backend
   searchJourney(term: string): Journey[] {
-    let foundJourneys: Journey[];
     if (!term.trim())
       return [];
     this.http.get<Journey[]>(this.journeyUrlBase + "/?name=" + term)
@@ -102,10 +104,10 @@ export class JourneyService extends ABaseService {
       )
       .subscribe(response => {
         console.debug("server respone: " + response);
-        foundJourneys = response;
+        this.searchResults = response;
       }, error => {
         console.error("error fetching Journey search: " + error);
       });
-    return foundJourneys;
+    return this.searchResults;
   }
 }

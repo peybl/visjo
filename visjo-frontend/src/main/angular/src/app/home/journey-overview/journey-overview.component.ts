@@ -16,10 +16,10 @@ export class JourneyOverviewComponent implements OnInit {
 
   shareLinkDialogRef: MatDialogRef<ShareDialogComponent>;
   emptyJourneyDescription: string;
-  journeys: Journey[];
+  journeys: Journey[] = [];
 
   constructor(private dialog: MatDialog, private journeyService: JourneyService, private auth: AuthService) {
-    auth.fetchUsername();
+    // auth.fetchUsername();
   }
 
   ngOnInit() {

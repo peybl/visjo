@@ -1,6 +1,6 @@
 <div *ngIf="authenticated()" class="row justify-content-center">
     <!-- <div class="row justify-content-center">  -->
-    <div *ngIf="journeys.length > 0; else noJourneys">
+    <div *ngIf="journeys?.length > 0; else noJourneys">
         <div class="journey-list" *ngFor="let journey of journeys">
             <div class="col-sm-12">
                 <div class="card text-center text-white bg-dark mb-3">
@@ -23,5 +23,10 @@
             </div>
         </div>
     </div>
-    <ng-template #noJourneys>No journeys saved.</ng-template>
+    <ng-template #noJourneys>
+        You don't seem to have any journeys.
+        Create your first journey via the create button above.
+    </ng-template>
 </div>
+
+<app-messageview></app-messageview>
