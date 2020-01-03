@@ -4,7 +4,7 @@ import { Journey } from '../../dtos/Journey';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-journey-overview',
@@ -16,18 +16,15 @@ export class JourneyOverviewComponent implements OnInit {
 
   shareLinkDialogRef: MatDialogRef<ShareDialogComponent>;
   emptyJourneyDescription: string;
-  journeys: Journey[] = [];
+  journeys$ : Observable<Journey[]>;
 
   constructor(private dialog: MatDialog, private journeyService: JourneyService, private auth: AuthService) {
-    // auth.fetchUsername();
+    auth.fetchUsername();
   }
 
   ngOnInit() {
     this.emptyJourneyDescription = "...";
-    if (this.authenticated()) {
-      this.journeys = this.journeyService.getJourneys();
-      console.debug(this.journeys);
-    }
+    this.journeys$ = this.journeyService.getJourneys();
   }
   
   authenticated() : boolean {

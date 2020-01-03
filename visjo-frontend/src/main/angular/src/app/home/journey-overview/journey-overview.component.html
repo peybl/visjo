@@ -1,24 +1,22 @@
 <div *ngIf="authenticated()" class="row justify-content-center">
     <!-- <div class="row justify-content-center">  -->
-    <div *ngIf="journeys?.length > 0; else noJourneys">
-        <div class="journey-list" *ngFor="let journey of journeys">
-            <div class="col-sm-12">
-                <div class="card text-center text-white bg-dark mb-3">
-                    <div class="card-header" container-fluid>
-                        <button class="share-icon" mat-icon-button>
-                            <mat-icon (click)="onClickShare()" aria-hidden="false" aria-label="share icon">share
-                            </mat-icon>
-                        </button>
-                        {{journey.name}}
-                        <button class="edit-icon" mat-icon-button>
-                            <mat-icon (click)="onClickEdit()" aria-hidden="false" aria-label="edit icon">edit</mat-icon>
-                        </button>
-                    </div>
-                    <img src={{journey.titleImage?.imageUrl}}>
-                    <div class="card-footer text-muted">
-                        <div *ngIf="journey.description; else noDescription">{{journey.description}}</div>
-                        <ng-template #noDescription>{{journey.id}}</ng-template>
-                    </div>
+    <div class="journey-list" *ngFor="let journey of journeys$ | async">
+        <div class="col-sm-12">
+            <div class="card text-center text-white bg-dark mb-3">
+                <div class="card-header" container-fluid>
+                    <button class="share-icon" mat-icon-button>
+                        <mat-icon (click)="onClickShare()" aria-hidden="false" aria-label="share icon">share
+                        </mat-icon>
+                    </button>
+                    {{journey.name}}
+                    <button class="edit-icon" mat-icon-button>
+                        <mat-icon (click)="onClickEdit()" aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                    </button>
+                </div>
+                <img src={{journey.titleImage?.imageUrl}}>
+                <div class="card-footer text-muted">
+                    <div *ngIf="journey.description; else noDescription">{{journey.description}}</div>
+                    <ng-template #noDescription>{{journey.id}}</ng-template>
                 </div>
             </div>
         </div>
