@@ -5,5 +5,5 @@ export interface Image {
     longitude: number,
     timestamp: string,
     name?: string, // Not in ImageDto.java
-    image?: string, // Not in ImageDto.java
+    imageUrl?: string, // Not in ImageDto.java
 }

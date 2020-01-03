@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { JourneyService } from 'src/app/services/Journey/journey.service';
 import { Journey } from '../../dtos/Journey';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-journey-overview',
@@ -21,10 +22,10 @@ export class JourneyOverviewComponent implements OnInit {
     auth.fetchUsername();
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.emptyJourneyDescription = "...";
     if (this.authenticated()) {
-      this.journeys = await this.journeyService.getJourneys();
+      this.journeys = this.journeyService.getJourneys();
       console.debug(this.journeys);
     }
   }

@@ -15,11 +15,11 @@ export class CreateComponent implements OnInit {
   ngOnInit() {
   }
 
-  async createAndUploadNewEmptyJourney() {
-    const newj = await this.journeyService.getMockJourney();
+  createAndUploadNewEmptyJourney() {
+    const newj : Journey = {name: "new journey " + Math.ceil(Math.random() * 100)};
     console.debug("new journey:");
     console.debug(newj);
-    this.lastAddedJourney = await this.journeyService.postNewJourney(newj);
+    this.lastAddedJourney = this.journeyService.postNewJourney(newj);
     console.debug("last added journey:");
     console.debug(this.lastAddedJourney);
   }

@@ -5,4 +5,5 @@ export interface Journey {
     name: string,
     description?: string, // Not in JourneyDto.java
     images?: Image[], // Not in JourneyDto.java
+    titleImage?: Image, // Not in JourneyDto.java
 }
