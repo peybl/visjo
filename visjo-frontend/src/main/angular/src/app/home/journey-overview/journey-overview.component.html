@@ -15,7 +15,7 @@
                 <img src={{journey.images[0].source}}>
                 <div class="card-footer text-muted">
                     <div *ngIf="journey.description; else elseBlock">{{journey.description}}</div>
-                    <ng-template #elseBlock>{{emptyJourneyDescription}}</ng-template>
+                    <ng-template #elseBlock>{{journey.id}}</ng-template>
                 </div>
             </div>
         </div>
