@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { JourneyService } from 'src/app/services/Journey/journey.service';
 import { Journey } from '../../dtos/Journey';
-import { Image } from '../../dtos/Image';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-journey-overview',
@@ -16,8 +16,10 @@ export class JourneyOverviewComponent implements OnInit {
 
   shareLinkDialogRef: MatDialogRef<ShareDialogComponent>;
   emptyJourneyDescription: string;
-  journeys: Journey[];
+  journeys$ : Observable<Journey[]>;
   
+  // OLD DATA:
+  //
   // images1: Image[] = [
   //   {id: '1', name: 'Image-1', longitude: 77.1234, latitude: -12.5456, date: new Date(), source: 'https://picsum.photos/900/500?random&t=602'},
   //   {id: '2', name: 'Image-2', longitude: 77.1234, latitude: -12.5456, date: new Date(), source: 'https://picsum.photos/900/500?random&t=603'},
@@ -36,7 +38,7 @@ export class JourneyOverviewComponent implements OnInit {
   //   {id: '3', name: 'Image-3', longitude: 77.1234, latitude: -12.5456, date: new Date(), source: 'https://picsum.photos/900/500?random&t=103'},
   // ];
 
-  // journeysX: Journey[] = [
+  // journeys: Journey[] = [
   //   {id: '0', name: 'My Journey-1', description:'My journey description is here', images: this.images1},
   //   {id: '1', name: 'My Journey-2', images: this.images2},
   //   {id: '2', name: 'My Journey-3', description: 'Another journey description', images: this.images3}
@@ -44,16 +46,14 @@ export class JourneyOverviewComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private journeyService: JourneyService, private auth: AuthService) {
     auth.fetchUsername();
-    if (auth.authenticated) {
-      journeyService.getJourneys().subscribe(j => this.journeys = j);
-    }
   }
 
   ngOnInit() {
     this.emptyJourneyDescription = "...";
+    this.journeys$ = this.journeyService.getJourneys();
   }
   
-  authenticated() {
+  authenticated() : boolean {
     return this.auth.authenticated;
   }
 

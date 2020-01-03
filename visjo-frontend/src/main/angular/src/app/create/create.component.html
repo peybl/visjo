@@ -1,1 +1,11 @@
 <p>create works!</p>
+
+<div *ngIf="lastAddedJourney">
+    Added a new journey with id: {{lastAddedJourney.id}} and name: {{lastAddedJourney.name}}
+</div>
+
+<button (click)="createAndUploadNewEmptyJourney()">
+    Create and upload a new empty Journey
+</button>
+
+<app-messageview></app-messageview>

@@ -6,6 +6,7 @@ export class ABaseService {
 
     protected log(message: string) {
         this.messageService.add(this.constructor.name + ": " + message);
+        console.log(message);
     }
 
     /**
