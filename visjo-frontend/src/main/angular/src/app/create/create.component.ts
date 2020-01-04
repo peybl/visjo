@@ -142,7 +142,7 @@ export class CreateComponent {
             debugger;
 
             $.ajax({
-                url: 'localhost:8080/image',
+                url: '/image',
                 method: 'POST',
                 enctype: 'multipart/form-data',
                 processData: false,
