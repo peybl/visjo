@@ -4,6 +4,7 @@ export interface Image {
     latitude: number;
     longitude: number;
     timestamp: string;
+    date: Date;
     name?: string; // Not in ImageDto.java
     imageUrl?: string; // Not in ImageDto.java
 }

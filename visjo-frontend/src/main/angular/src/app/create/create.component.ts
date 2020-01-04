@@ -91,7 +91,16 @@ export class CreateComponent {
             }
             file = file as File;
             this.newFiles.push(file);
-            const image = new Image();
+            const image = new class implements Image {
+                id: number;
+                journey: number;
+                latitude: number;
+                longitude: number;
+                timestamp: string;
+                date: Date;
+                name?: string; // Not in ImageDto.java
+                imageUrl?: string; // Not in ImageDto.java
+            }();
             image.name = file.name;
             image.date = new Date(file.lastModified);
             let result = await this.getEXIFData(file);
@@ -102,7 +111,7 @@ export class CreateComponent {
             image.longitude = result[1];
             const uri = await this.getFileLink(file);
             if (typeof uri === 'string') {
-                image.source = uri;
+                image.imageUrl = uri;
             }
             this.images.push(image);
         }
@@ -120,13 +129,13 @@ export class CreateComponent {
     async onUpload() {
         this.updateForm();
         const journey = await this.preUpload(this.journey);
-        if (journey && !journey.id) {
+        if (journey /*&& !journey.id*/) {
             return;
         }
         for (const image of this.images) {
             const data = new FormData();
             data.append('file', this.newFiles[1], image.name);
-            data.append('journeyId', journey.id);
+            data.append('journeyId', 'id');
             data.append('latitude', image.latitude + '');
             data.append('longitude', image.longitude + '');
             data.append('timestamp', this.getUtcString());
