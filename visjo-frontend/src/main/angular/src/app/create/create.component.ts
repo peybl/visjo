@@ -81,7 +81,7 @@ export class CreateComponent {
             this.images[i].date = new Date($('#date-' + i).val());
         }
         this.journey.images = this.images;
-        debugger;
+        // debugger;
     }
 
     async onFileChanged(event) {
@@ -142,7 +142,7 @@ export class CreateComponent {
             debugger;
 
             $.ajax({
-                url: '/image',
+                url: 'localhost:8080/image',
                 method: 'POST',
                 enctype: 'multipart/form-data',
                 processData: false,
