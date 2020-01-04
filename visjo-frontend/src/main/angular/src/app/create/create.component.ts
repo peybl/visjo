@@ -14,7 +14,7 @@ import { JourneyService } from '../services/Journey/journey.service';
 })
 export class CreateComponent {
     public journeyForm: FormGroup;
-    public journey: Journey = new Journey();
+    public journey: Journey;
 
     public images: Image[] = [];
     public newFiles: File[] = [];
@@ -25,6 +25,13 @@ export class CreateComponent {
             title: [],
             images: this.formBuilder.array([])
         });
+        this.journey = new class implements Journey {
+            description: string;
+            id: number;
+            images: Image[];
+            name: string;
+            titleImage: Image;
+        }();
     }
 
     getEXIFData(file) {
@@ -102,26 +109,24 @@ export class CreateComponent {
     }
 
     preUpload(journey) {
+        const service = this.journeyService;
         return new Promise(function(resolve) {
-            $.post('/journey', journey)
-                .done((result) => {
-                    console.log(result);
-                    resolve({success: true, result});
-                })
-                .fail((err) => {
-                    console.error('Error creating journey with name "' + $(this).name.value + '"', err);
-                    resolve({success: false});
-                });
+            service.postNewJourney(journey).subscribe(
+                response => resolve({response})
+            );
         });
     }
 
     async onUpload() {
         this.updateForm();
-        let journey = await this.preUpload(this.journey);
+        const journey = await this.preUpload(this.journey);
+        if (journey && !journey.id) {
+            return;
+        }
         for (const image of this.images) {
             const data = new FormData();
             data.append('file', this.newFiles[1], image.name);
-            data.append('journeyId', this.journey.id);
+            data.append('journeyId', journey.id);
             data.append('latitude', image.latitude + '');
             data.append('longitude', image.longitude + '');
             data.append('timestamp', this.getUtcString());
