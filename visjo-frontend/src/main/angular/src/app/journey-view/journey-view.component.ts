@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { JourneyService } from '../services/Journey/journey.service';
 import { Journey } from '../dtos/Journey';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-journey-view',
@@ -8,18 +9,17 @@ import { Journey } from '../dtos/Journey';
   styleUrls: ['./journey-view.component.sass']
 })
 export class JourneyViewComponent implements OnInit {
-
+  selectedJourney$ : Observable<Journey>;
   @Input()
-  private selectedJourneyId : string;
-  private selectedJourney : Journey;
+  private selectedJourneyId : number;
 
   constructor(private journeyService: JourneyService) { }
 
   ngOnInit() {
-    //this.getJourney(this.selectedJourneyId);
+    this.getJourney(this.selectedJourneyId);
   }
 
-  getJourney(journeyId: string) : void {
-    this.journeyService.getJourneyById(journeyId).subscribe(j => this.selectedJourney = j);
+  getJourney(journeyId: number) :void {
+    this.selectedJourney$ = this.journeyService.getJourneyById(journeyId);
   }
 }

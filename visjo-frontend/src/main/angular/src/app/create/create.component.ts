@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import * as EXIF from 'exif-js/exif';
 import {isArray} from 'util';
+import { JourneyService } from '../services/Journey/journey.service';
+import { Journey } from '../dtos/Journey';
 
 @Component({
   selector: 'app-create',
@@ -13,6 +15,7 @@ export class CreateComponent {
     public files: File[] = [];
 
     public images: string[] = [];
+    public lastAddedJourney;
 
     public arrayImages: {
         title: string;
@@ -22,7 +25,7 @@ export class CreateComponent {
         file: File;
     }[] = [];
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(private formBuilder: FormBuilder, private journeyService: JourneyService) {
         this.journeyForm = this.formBuilder.group({
             title: [],
             images: this.formBuilder.array([])
@@ -88,7 +91,10 @@ export class CreateComponent {
     }
 
     onUpload() {
-        // upload code goes here
+        const newj: Journey = {name: 'new journey ' + Math.ceil(Math.random() * 100)};
+        this.journeyService.postNewJourney(newj).subscribe(
+            response => this.lastAddedJourney = response
+        );
     }
 
     submit() {
