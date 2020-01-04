@@ -10,9 +10,9 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class JourneyService extends ABaseService {
-  private journeyUrlBase = "/journey";
+  private readonly journeyUrlBase = "/journey";
 
-  private httpOptions = {
+  private readonly httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
@@ -21,6 +21,7 @@ export class JourneyService extends ABaseService {
     super(messageService);
   }
 
+  // tested, works
   getJourneys(): Observable<Journey[]> {
     return this.http.get<Journey[]>(this.journeyUrlBase)
       .pipe(
@@ -29,6 +30,7 @@ export class JourneyService extends ABaseService {
       );
   }
 
+  // ! untested
   getJourneyById(id: number): Observable<Journey> {
     const url = this.journeyUrlBase + "/" + id;
     return this.http.get<Journey>(url)
@@ -42,6 +44,7 @@ export class JourneyService extends ABaseService {
       );
   }
 
+  // tested, works
   postNewJourney(journeyOrName: Journey | string): Observable<Journey> {
     let name : string;
     if (typeof journeyOrName === "string")
@@ -57,18 +60,18 @@ export class JourneyService extends ABaseService {
       );
   }
 
-  // ! NYI in backend
+  // ! NYI in backend, untested
   deleteJourney(journey: Journey | number): Observable<Journey> {
     const id = typeof journey === "number" ? journey : journey.id;
     const url = this.journeyUrlBase + "/" + id;
-    return this.http.delete<Journey>(url, this.httpOptions)
+    return this.http.delete<Journey>(url)
       .pipe(
         tap(() => this.log("deleted Journey with id: " + id)),
         catchError(this.handleError<Journey>("delete journey"))
       );
   }
 
-  // ! NYI in backend
+  // ! NYI in backend, untested
   searchJourney(term: string): Observable<Journey[]> {
     if (!term.trim())
       return of([]);

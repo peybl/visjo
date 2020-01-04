@@ -19,6 +19,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule, MatButtonModule, MatDialogModule } from '@angular/material';
 import { ShareDialogComponent } from './home/share-dialog/share-dialog.component';
+import { ImagesService } from './services/Images/images.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,10 @@ import { ShareDialogComponent } from './home/share-dialog/share-dialog.component
     MatIconModule,
     MatDialogModule
   ],
-  providers: [JourneyService],
+  providers: [
+    JourneyService,
+    ImagesService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [ShareDialogComponent]
 })
