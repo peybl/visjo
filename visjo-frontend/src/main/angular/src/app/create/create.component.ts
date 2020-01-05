@@ -56,7 +56,7 @@ export class CreateComponent {
         });
     }
 
-    getFileLink(file) {
+    getFileLink(file) : Promise<string> {
         return new Promise(function(resolve) {
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -103,7 +103,8 @@ export class CreateComponent {
             }();
             image.name = file.name;
             image.date = new Date(file.lastModified);
-            let result = await this.getEXIFData(file);
+            // let result = await this.getEXIFData(file);
+            let result = [12.0703, 2.8445];
             if (!result) {
                 result = [0, 0];
             }
@@ -117,11 +118,11 @@ export class CreateComponent {
         }
     }
 
-    preUpload(journey) {
+    preUpload(journey: Journey) : Promise<Journey> {
         const service = this.journeyService;
         return new Promise(function(resolve) {
             service.postNewJourney(journey).subscribe(
-                response => resolve({response})
+                response => resolve(response)
             );
         });
     }
@@ -129,17 +130,18 @@ export class CreateComponent {
     async onUpload() {
         this.updateForm();
         const journey = await this.preUpload(this.journey);
-        if (journey /*&& !journey.id*/) {
+        console.debug("new Journey: " + journey.id + " - " + journey.name);
+        if (!journey /*&& !journey.id*/) {
             return;
         }
         for (const image of this.images) {
             const data = new FormData();
-            data.append('file', this.newFiles[1], image.name);
-            data.append('journeyId', 'id');
+            data.append('journeyId', journey.id + "");
             data.append('latitude', image.latitude + '');
             data.append('longitude', image.longitude + '');
             data.append('timestamp', this.getUtcString());
-            debugger;
+            data.append('file', this.newFiles[1], image.name);
+            // debugger;
 
             $.ajax({
                 url: '/image',
@@ -150,14 +152,14 @@ export class CreateComponent {
                 cache: false,
                 data
             }).done((image) => {
-                console.log(image);
+                console.log("uploaded image: " + image);
             }).fail((err) => {
                 console.error('Error uploading file "' + image.name + '"', err.responseText);
             });
         }
     }
 
-    getUtcString() {
+    getUtcString() : string {
         const now = new Date();
         const utc = [];
         utc.push(now.getFullYear());
