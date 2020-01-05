@@ -21,9 +21,13 @@ export class JourneyViewComponent implements OnInit {
 
   ngOnInit() {}
 
-  getJourney() :void {
+  getJourney() : void {
     console.debug("getting journey with id " + this.selectedJourneyId);
     this.selectedJourney$ = this.journeyService.getJourneyById(this.selectedJourneyId);
     this.imagesOfJourney$ = this.imageService.getImagesForJourney(this.selectedJourneyId);
+  }
+
+  focusImage(image: Image) : void {
+    console.debug("focusing image " + image.id);
   }
 }

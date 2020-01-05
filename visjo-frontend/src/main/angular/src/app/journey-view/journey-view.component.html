@@ -4,14 +4,13 @@
     <input type="number" [(ngModel)]="selectedJourneyId">
     <button (click)="getJourney()">Get</button>
 </div>
-<div *ngIf="selectedJourney$ | async; else noJourney">
-    <div *ngFor="let image of imagesOfJourney$ | async">
-        <ul>
-            <li>
-                ID: {{image.id}} Name: {{image.name}} Long: {{image.longitude}} Lat: {{image.latitude}}
-            </li>
-        </ul>
-    </div>
+<div *ngIf="selectedJourney$ | async; let journey; else noJourney">
+    <ul>
+        <li *ngFor="let image of imagesOfJourney$ | async" (click)="focusImage(image)">
+            ID: {{image.id}} Name: {{image.name}} Long: {{image.longitude}} Lat: {{image.latitude}}
+        </li>
+    </ul>
+    <span>Insert GPS Map here for {{journey.id}}</span>
 </div>
 <ng-template #noJourney>
     No Journey to show.
