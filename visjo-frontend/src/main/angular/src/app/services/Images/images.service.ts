@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class ImagesService extends ABaseService{
   private readonly imageUrlBase = "/image";
+  private readonly journeySubUrl = "/journey";
   private readonly httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -28,7 +29,7 @@ export class ImagesService extends ABaseService{
       id = journeyOrId;
     else
       id = journeyOrId.id;
-    const url = this.imageUrlBase + "/" + id;
+    const url = this.imageUrlBase + this.journeySubUrl + "/" + id;
     return this.http.get<Image[]>(url)
       .pipe(
         tap(() => this.log("fetched Images for Journey " + id)),
@@ -55,13 +56,15 @@ export class ImagesService extends ABaseService{
   }
 
   // untested
-  postNewImage(image: Image, file: File) : Observable<Image> {
+  postNewImage(image: Image) : Observable<Image> {
     const data = new FormData();
-    data.append('file', file, image.name);
+    data.append('file', image.file, image.name);
     data.append('journeyId', image.journey + "");
     data.append('latitude', image.latitude + "");
     data.append('longitude', image.longitude + "");
     data.append('timestamp',image.timestamp);
+    // console.debug(image);
+    // console.debug(file);
 
     return this.http.post<Image>(this.imageUrlBase, data)
       .pipe(

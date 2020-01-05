@@ -6,6 +6,7 @@ import {Journey} from '../dtos/Journey';
 import {Image} from '../dtos/Image';
 import * as $ from 'jquery';
 import { JourneyService } from '../services/Journey/journey.service';
+import { ImagesService } from '../services/Images/images.service';
 
 @Component({
   selector: 'app-create',
@@ -20,18 +21,14 @@ export class CreateComponent {
     public newFiles: File[] = [];
     public lastAddedJourney;
 
-    constructor(private formBuilder: FormBuilder, private journeyService: JourneyService) {
+    constructor(private formBuilder: FormBuilder,
+            private journeyService: JourneyService,
+            private imageService: ImagesService) {
         this.journeyForm = this.formBuilder.group({
             title: [],
             images: this.formBuilder.array([])
         });
-        this.journey = new class implements Journey {
-            description: string;
-            id: number;
-            images: Image[];
-            name: string;
-            titleImage: Image;
-        }();
+        this.journey = new Journey();
     }
 
     getEXIFData(file) {
@@ -91,16 +88,7 @@ export class CreateComponent {
             }
             file = file as File;
             this.newFiles.push(file);
-            const image = new class implements Image {
-                id: number;
-                journey: number;
-                latitude: number;
-                longitude: number;
-                timestamp: string;
-                date: Date;
-                name?: string; // Not in ImageDto.java
-                imageUrl?: string; // Not in ImageDto.java
-            }();
+            const image = new Image();
             image.name = file.name;
             image.date = new Date(file.lastModified);
             // let result = await this.getEXIFData(file);
@@ -114,6 +102,7 @@ export class CreateComponent {
             if (typeof uri === 'string') {
                 image.imageUrl = uri;
             }
+            image.file = file;
             this.images.push(image);
         }
     }
@@ -135,27 +124,32 @@ export class CreateComponent {
             return;
         }
         for (const image of this.images) {
-            const data = new FormData();
-            data.append('journeyId', journey.id + "");
-            data.append('latitude', image.latitude + '');
-            data.append('longitude', image.longitude + '');
-            data.append('timestamp', this.getUtcString());
-            data.append('file', this.newFiles[1], image.name);
+            // const data = new FormData();
+            // data.append('journeyId', journey.id + "");
+            // data.append('latitude', image.latitude + '');
+            // data.append('longitude', image.longitude + '');
+            // data.append('timestamp', this.getUtcString());
+            // data.append('file', this.newFiles[1], image.name);
             // debugger;
 
-            $.ajax({
-                url: '/image',
-                method: 'POST',
-                enctype: 'multipart/form-data',
-                processData: false,
-                contentType: false,
-                cache: false,
-                data
-            }).done((image) => {
-                console.log("uploaded image: " + image);
-            }).fail((err) => {
-                console.error('Error uploading file "' + image.name + '"', err.responseText);
-            });
+            // $.ajax({
+            //     url: '/image',
+            //     method: 'POST',
+            //     enctype: 'multipart/form-data',
+            //     processData: false,
+            //     contentType: false,
+            //     cache: false,
+            //     data
+            // }).done((image) => {
+            //     console.log("uploaded image: " + image);
+            // }).fail((err) => {
+            //     console.error('Error uploading file "' + image.name + '"', err.responseText);
+            // });
+
+            image.journey = journey.id; // TODO find better way
+            image.timestamp = this.getUtcString();
+            this.imageService.postNewImage(image)
+                .subscribe(image => console.log("uploaded image: " + image));
         }
     }
 

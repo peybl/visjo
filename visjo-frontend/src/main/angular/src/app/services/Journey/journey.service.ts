@@ -35,10 +35,10 @@ export class JourneyService extends ABaseService {
     const url = this.journeyUrlBase + "/" + id;
     return this.http.get<Journey>(url)
       .pipe(
-        map(journeys => journeys[0]),
+        // map(journeys => journeys[0]),
         tap(j => {
-          const outcome = j ? "fetched" : "didn't find";
-          this.log(outcome + " Journey with ID " + id)
+          const outcome = j !== undefined ? "fetched" : "didn't find";
+          this.log(outcome + " Journey with ID " + id + ", is " + j);
         }),
         catchError(this.handleError<Journey>("get Journey with ID: " + id))
       );
