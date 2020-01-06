@@ -33,40 +33,41 @@ export class CreateComponent {
 
     getEXIFData(file) {
         return new Promise(function(resolve) {
-            EXIF.getData(file, function() {
+            EXIF.getData(file, function () {
                 EXIF.pretty(this);
 
                 let latitude = this.exifdata.GPSLatitude;
                 let longitude = this.exifdata.GPSLongitude;
 
                 if (!latitude || !longitude) {
-                    return { lat: 0, long: 0 };
+                    return {lat: 0, long: 0};
                 }
                 if (isArray(latitude)) {
-                    latitude = this.getDecimalFromGps(latitude);
+                    latitude = getDecimalFromGps(latitude);
                 }
                 if (isArray(longitude)) {
-                    longitude = this.getDecimalFromGps(longitude);
+                    longitude = getDecimalFromGps(longitude);
                 }
-                resolve([ latitude || 0, longitude || 0 ]);
+                resolve([latitude || 0, longitude || 0]);
             });
+
+            const getDecimalFromGps = (gps) => {
+                // If you want to convert to a single decimal number:
+                // = Degrees + Minutes/60 + Seconds/3600
+                // see: https://gis.stackexchange.com/questions/136925
+                if (gps.length !== 3) {
+                    return 0;
+                }
+                let decimal = 0;
+                decimal += gps[0];
+                decimal += gps[1] / 60;
+                decimal += gps[2] / 3600;
+                return decimal;
+            };
         });
     }
 
-    private getDecimalFromGps(gps: number[]) : number {
-        // If you want to convert to a single decimal number:
-        // = Degrees + Minutes/60 + Seconds/3600
-        // see: https://gis.stackexchange.com/questions/136925
-        if (gps.length !== 3)
-            return 0;
-        let decimal = 0;
-        decimal += gps[0];
-        decimal += gps[1] / 60;
-        decimal += gps[2] / 3600;
-        return decimal;
-    }
-
-    getFileLink(file) : Promise<string> {
+    getFileLink(file): Promise<string> {
         return new Promise(function(resolve) {
             const reader = new FileReader();
             reader.onload = (e) => {
