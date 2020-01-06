@@ -91,7 +91,7 @@ export class CreateComponent {
             const image = new Image();
             image.name = file.name;
             image.date = new Date(file.lastModified);
-            // let result = await this.getEXIFData(file);
+            // let result = await this.getEXIFData(file); // TODO add back when EXIF works
             let result = [12.0703, 2.8445];
             if (!result) {
                 result = [0, 0];

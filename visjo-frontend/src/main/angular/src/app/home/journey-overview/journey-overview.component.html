@@ -5,12 +5,15 @@
             <div class="card text-center text-white bg-dark mb-3">
                 <div class="card-header" container-fluid>
                     <button class="share-icon" mat-icon-button>
-                        <mat-icon (click)="onClickShare()" aria-hidden="false" aria-label="share icon">share
+                        <mat-icon (click)="onClickShare()" aria-hidden="false" aria-label="share icon">
+                            share
                         </mat-icon>
                     </button>
                     {{journey.name}}
                     <button class="edit-icon" mat-icon-button>
-                        <mat-icon (click)="onClickEdit()" aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                        <mat-icon (click)="onClickEdit()" aria-hidden="false" aria-label="edit icon">
+                            edit
+                        </mat-icon>
                     </button>
                 </div>
                 <img src={{journey.titleImage?.imageUrl}}>
