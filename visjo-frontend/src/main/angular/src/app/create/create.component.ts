@@ -104,8 +104,7 @@ export class CreateComponent {
             const image = new Image();
             image.name = file.name;
             image.date = new Date(file.lastModified);
-            // let result = await this.getEXIFData(file); // TODO add back when EXIF works
-            let result = [this.getDecimalFromGps([65, 1, 12.0703]), this.getDecimalFromGps([25, 28, 2.8445])];
+            let result = await this.getEXIFData(file);
             if (!result) {
                 result = [0, 0];
             }
