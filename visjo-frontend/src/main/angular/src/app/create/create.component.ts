@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import * as EXIF from 'exif-js/exif';
+import * as EXIF from '../exported-libraries/exif-js/exif';
 import {isArray} from 'util';
 import {Journey} from '../dtos/Journey';
 import {Image} from '../dtos/Image';

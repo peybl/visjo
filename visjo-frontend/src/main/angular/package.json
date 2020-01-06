@@ -31,7 +31,6 @@
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1",
-    "exif-js": "^2.3.0",
     "leaflet": "^1.6.0",
     "leaflet-omnivore": "0.3.4",
     "mapbox": "1.0.0-beta10"
