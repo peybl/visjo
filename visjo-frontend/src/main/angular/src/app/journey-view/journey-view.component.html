@@ -11,16 +11,30 @@
             <button (click)="getJourney()">Get</button>
         </div>
         <div *ngIf="selectedJourney$ | async; let journey; else noJourney">
-            <ul>
+            <span>GPS Map for Journey {{journey.name}}</span>
+            <!-- <ul>
                 <li *ngFor="let image of imagesOfJourney$ | async" (click)="focusImage(image)">
                     ID: {{image.id}} Name: {{image.name}} Long: {{image.longitude}} Lat: {{image.latitude}}
                 </li>
-            </ul>
-            <span>Insert GPS Map here for {{journey.id}}</span>
+            </ul> -->
+            <div *ngFor="let image of imagesOfJourney$ | async" (click)="focusImage(image)">
+                <div (click)="focusImage()"
+                style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start;">
+                <img src="https://i.picsum.photos/id/581/536/354.jpg" style="width: 50px; height: 50px;">
+                <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;">
+                    <span>{{image.id}}</span>
+                    <span>{{image.latitude}}</span>
+                    <span>{{image.longitude}}</span>
+                    <span>{{image.name}}</span>
+                    <span>{{image.date}}</span>
+                    <span>{{image.timestamp}}</span>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
 
-    <div id="map" style="width: 75%; height: 84vh;"></div>
+    <div id="map" style="width: 75%; height: 85vh;"></div>
 
 </div>
 
@@ -29,8 +43,4 @@
 </ng-template>
 <ng-template #noImages>
     No images in journey.
-</ng-template>
-
-<ng-template #imagesList>
-
 </ng-template>

@@ -54,7 +54,7 @@ export class JourneyViewComponent implements OnInit, AfterViewInit {
       return;
     console.debug("focusing image " + image.id);
     const coords : L.LatLng = L.latLng(image.latitude, image.longitude);
-    const zoom = 9; // TODO tune
+    const zoom = 12; // TODO tune
     this.map.flyTo(coords, zoom);
   }
 
@@ -95,4 +95,5 @@ export class JourneyViewComponent implements OnInit, AfterViewInit {
   clearMarkers() {
     // TODO
   }
+  
 }
