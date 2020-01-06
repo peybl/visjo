@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-journey-overview',
@@ -44,7 +45,10 @@ export class JourneyOverviewComponent implements OnInit {
   //   {id: '2', name: 'My Journey-3', description: 'Another journey description', images: this.images3}
   // ];
 
-  constructor(private dialog: MatDialog, private journeyService: JourneyService, private auth: AuthService) {
+  constructor(private dialog: MatDialog,
+      private journeyService: JourneyService,
+      private auth: AuthService,
+      private router: Router) {
     auth.fetchUsername();
   }
 
@@ -66,5 +70,4 @@ export class JourneyOverviewComponent implements OnInit {
     console.log("share icon clicked!");
     this.shareLinkDialogRef = this.dialog.open(ShareDialogComponent);
   }
-
 }
