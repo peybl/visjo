@@ -43,14 +43,27 @@ export class CreateComponent {
                     return { lat: 0, long: 0 };
                 }
                 if (isArray(latitude)) {
-                    latitude = latitude[latitude.length - 1];
+                    latitude = this.getDecimalFromGps(latitude);
                 }
                 if (isArray(longitude)) {
-                    longitude = longitude[longitude.length - 1];
+                    longitude = this.getDecimalFromGps(longitude);
                 }
                 resolve([ latitude || 0, longitude || 0 ]);
             });
         });
+    }
+
+    private getDecimalFromGps(gps: number[]) : number {
+        // If you want to convert to a single decimal number:
+        // = Degrees + Minutes/60 + Seconds/3600
+        // see: https://gis.stackexchange.com/questions/136925
+        if (gps.length !== 3)
+            return 0;
+        let decimal = 0;
+        decimal += gps[0];
+        decimal += gps[1] / 60;
+        decimal += gps[2] / 3600;
+        return decimal;
     }
 
     getFileLink(file) : Promise<string> {
@@ -92,7 +105,7 @@ export class CreateComponent {
             image.name = file.name;
             image.date = new Date(file.lastModified);
             // let result = await this.getEXIFData(file); // TODO add back when EXIF works
-            let result = [12.0703, 2.8445];
+            let result = [this.getDecimalFromGps([65, 1, 12.0703]), this.getDecimalFromGps([25, 28, 2.8445])];
             if (!result) {
                 result = [0, 0];
             }
