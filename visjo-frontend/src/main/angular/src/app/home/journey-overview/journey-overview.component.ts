@@ -55,11 +55,11 @@ export class JourneyOverviewComponent implements OnInit {
     auth.fetchUsername();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     debugger;
     this.emptyJourneyDescription = "...";
     const self = this;
-    this.journeyService.getJourneys().subscribe(jours => {
+    await this.journeyService.getJourneys().subscribe(jours => {
         jours.forEach( async (journey) => {
             journey = await self.loadImages(journey);
             self.journeys.push(journey);
@@ -72,9 +72,16 @@ export class JourneyOverviewComponent implements OnInit {
       const self = this;
       return new Promise(function(resolve) {
           self.imagesService.getImagesForJourney(id).subscribe(images => {
-              journey.images = images as Image[];
-              resolve(journey);
+              resolve(images);
           });
+      }).then(function (images: Image[]) {
+          const imgs = [];
+          images.forEach(async (image) => {
+              image.imageUrl = 'http://localhost:8080/image/' + image.id;
+              imgs.push(image);
+          });
+          journey.images = imgs as Image[];
+          return journey;
       });
   }
 
