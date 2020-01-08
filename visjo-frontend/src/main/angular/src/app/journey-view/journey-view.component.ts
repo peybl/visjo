@@ -20,6 +20,7 @@ export class JourneyViewComponent implements OnInit, AfterViewInit {
   imagesOfJourney$ : Observable<Image[]>;
   // @Input()
   selectedJourneyId : number;
+  journeys: Journey[];
 
   // GPS stuff
   private map: L.Map;
@@ -31,6 +32,10 @@ export class JourneyViewComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.selectedJourneyId = this.route.snapshot.params["id"];
+    const self = this;
+    this.journeyService.getJourneys().subscribe(jours => {
+      self.journeys = jours;
+    });
     this.initializeMap();
   }
 
@@ -41,6 +46,8 @@ export class JourneyViewComponent implements OnInit, AfterViewInit {
   }
 
   getJourney() : void {
+    if (typeof this.selectedJourneyId === "string")
+        this.selectedJourneyId = parseInt(this.selectedJourneyId);
     if (this.selectedJourneyId === undefined)
       return;
     console.debug("getting journey with id " + this.selectedJourneyId);
@@ -81,7 +88,7 @@ export class JourneyViewComponent implements OnInit, AfterViewInit {
       const markerCoords = L.latLng(lat, lon);
       const markerOptions : L.MarkerOptions = {draggable: false, };
       const marker = L.marker(markerCoords, markerOptions);
-      marker.bindPopup("<b>Hello world!</b><br>I am a popup.")
+      marker.bindPopup("<b>Image "+ img.id +"</b><br><img style='width:58px;height:auto;' src='http://localhost:8080/image/" + img.id + "'/>")
       marker.addTo(this.map);
       if (first) {
         this.focusImage(img);
