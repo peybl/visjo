@@ -1,6 +1,6 @@
 <div *ngIf="authenticated()" class="row justify-content-center">
     <!-- <div class="row justify-content-center">  -->
-    <div class="journey-list" *ngFor="let journey of journeys$ | async">
+    <div class="journey-list" *ngFor="let journey of journeys | async">
         <div class="col-sm-12">
             <div class="card text-center text-white bg-dark mb-3">
                 <div class="card-header" container-fluid>

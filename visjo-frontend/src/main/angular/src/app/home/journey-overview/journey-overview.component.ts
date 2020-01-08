@@ -4,8 +4,10 @@ import { Journey } from '../../dtos/Journey';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import {ImagesService} from '../../services/Images/images.service';
+import {Image} from "../../dtos/Image";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-journey-overview',
@@ -17,7 +19,7 @@ export class JourneyOverviewComponent implements OnInit {
 
   shareLinkDialogRef: MatDialogRef<ShareDialogComponent>;
   emptyJourneyDescription: string;
-  journeys$ : Observable<Journey[]>;
+  journeys: Journey[] = [];
   
   // OLD DATA:
   //
@@ -47,17 +49,36 @@ export class JourneyOverviewComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
       private journeyService: JourneyService,
+      private imagesService: ImagesService,
       private auth: AuthService,
       private router: Router) {
     auth.fetchUsername();
   }
 
   ngOnInit() {
+    debugger;
     this.emptyJourneyDescription = "...";
-    this.journeys$ = this.journeyService.getJourneys();
+    const self = this;
+    this.journeyService.getJourneys().subscribe(jours => {
+        jours.forEach( async (journey) => {
+            journey = await self.loadImages(journey);
+            self.journeys.push(journey);
+        });
+    });
   }
-  
-  authenticated() : boolean {
+
+  loadImages(journey: Journey): Promise<Journey> {
+      const id = journey.id;
+      const self = this;
+      return new Promise(function(resolve) {
+          self.imagesService.getImagesForJourney(id).subscribe(images => {
+              journey.images = images as Image[];
+              resolve(journey);
+          });
+      });
+  }
+
+  authenticated(): boolean {
     return this.auth.authenticated;
   }
 
