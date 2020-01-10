@@ -40,7 +40,7 @@ export class CreateComponent {
                 let longitude = this.exifdata.GPSLongitude;
 
                 if (!latitude || !longitude) {
-                    return {lat: 0, long: 0};
+                    resolve([0, 0]);
                 }
                 if (isArray(latitude)) {
                     latitude = getDecimalFromGps(latitude);
