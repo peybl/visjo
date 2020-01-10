@@ -56,7 +56,6 @@ export class JourneyOverviewComponent implements OnInit {
   }
 
   async ngOnInit() {
-    //debugger;
     this.emptyJourneyDescription = "...";
     const self = this;
     await this.journeyService.getJourneys().subscribe(jours => {
