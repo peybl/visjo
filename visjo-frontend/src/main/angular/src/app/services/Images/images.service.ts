@@ -55,7 +55,7 @@ export class ImagesService extends ABaseService{
       );
   }
 
-  // untested
+  // seems to work
   postNewImage(image: Image) : Observable<Image> {
     const data = new FormData();
     data.append('file', image.file, image.name);

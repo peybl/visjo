@@ -74,12 +74,12 @@ export class JourneyOverviewComponent implements OnInit {
               resolve(images);
           });
       }).then(function (images: Image[]) {
-          const imgs = [];
+          const imgs : Image[] = [];
           images.forEach(async (image) => {
               image.imageUrl = 'http://localhost:8080/image/' + image.id;
               imgs.push(image);
           });
-          journey.images = imgs as Image[];
+          journey.images = imgs;
           return journey;
       });
   }
