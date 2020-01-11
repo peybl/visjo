@@ -16,10 +16,10 @@
                         </mat-icon>
                     </button>
                 </div>
-                <img [routerLink]="['/journeyView', journey.id]" style="width: 100%; height:auto;" src={{journey.images[0]?.imageUrl}}>
+                <img [routerLink]="['/journeyView', journey.id]" style="width: 510px; height: 286px;" src={{journey.images[0]?.imageUrl}}>
                 <div class="card-footer text-muted">
                     <div *ngIf="journey.description; else noDescription">{{journey.description}}</div>
-                    <ng-template #noDescription>{{journey.id}}</ng-template>
+                    <ng-template #noDescription>...</ng-template>
                 </div>
             </div>
         </div>
