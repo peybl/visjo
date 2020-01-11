@@ -4,7 +4,7 @@
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
 
-<div class="container">
+<div class="title-container">
     <label class="journey-title" for="title">
         Journey View
     </label>
@@ -12,17 +12,18 @@
 <br/>
 
 <div class="selector">
-    <select class="browser-default custom-select" [(ngModel)]="selectedJourneyId">
+    <select id="dropdown" class="browser-default custom-select" [(ngModel)]="selectedJourneyId">
         <option selected hidden>Select a journey</option>
         <option *ngFor="let journey of journeys" value="{{journey.id}}">{{journey.name}}</option>
     </select>
 
     <button class="btn btn-dark btn-sm" (click)="getJourney()">Load journey</button>
 </div>
+    
 
 <div class="view-content">
     <div class="" style="width: 30%;">
-        
+            
         <div *ngIf="selectedJourney$ | async; let journey; else noJourney">
             
             <!-- <ul>
@@ -30,26 +31,53 @@
                     ID: {{image.id}} Name: {{image.name}} Long: {{image.longitude}} Lat: {{image.latitude}}
                 </li>
             </ul> -->
+
             <div *ngFor="let image of imagesOfJourney$ | async" (click)="focusImage(image)">
-                <div (click)="focusImage()"
-                style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start;">
-                <img src="https://i.picsum.photos/id/581/536/354.jpg" style="width: 50px; height: 50px;">
-                <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;">
-                    <span>{{image.id}}</span>
-                    <span>{{image.latitude}}</span>
-                    <span>{{image.longitude}}</span>
-                    <span>{{image.name}}</span>
-                    <span>{{image.date}}</span>
-                    <span>{{image.timestamp}}</span>
+                <div class="info-container" (click)="focusImage()">
+                    <img class="thumbnail" src="https://i.picsum.photos/id/581/536/354.jpg" alt="">
+                    <div class="info-box">
+                        <ul>
+                            <li><span>ID</span></li>
+                            <li><span>Latitude</span></li>
+                            <li><span>Longitude</span></li>
+                            <li><span>Name</span></li>
+                            <li><span>Date</span></li>
+                            <li><span>Timestamp</span></li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <ul>
+                            <li>: {{image.id}}</li>
+                            <li>: {{image.latitude}}</li>
+                            <li>: {{image.longitude}}</li>
+                            <li>: {{image.name}}</li>
+                            <li>: {{image.date}}</li>
+                            <li>: {{image.timestamp}}</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+            <!--TO-DO: make scrollable -->
+
+            <!--
+            <div *ngFor="let image of imagesOfJourney$ | async" (click)="focusImage(image)">
+                <div (click)="focusImage()">
+                    <img src="https://i.picsum.photos/id/581/536/354.jpg" style="width: 50px; height: 50px;">
+                    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;">
+                        <span>{{image.id}}</span>
+                        <span>{{image.latitude}}</span>
+                        <span>{{image.longitude}}</span>
+                        <span>{{image.name}}</span>
+                        <span>{{image.date}}</span>
+                        <span>{{image.timestamp}}</span>
+                    </div>
+                </div>
             </div>
+            -->
         </div>
     </div>
 
     <div id="map"></div>
-    
-
 </div>
 
 <ng-template #noJourney>

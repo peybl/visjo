@@ -2,8 +2,44 @@ label {
     color: white;
 }
 
-.container {
+.title-container {
     text-align: center;
+}
+
+.info-container {
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 368px;
+    height: 80;
+    background-color: #343a40;
+    margin-bottom: 5px;
+    .thumbnail {
+        margin-left: 20px;
+        width: 78px;
+        height: 78px;
+    }
+}
+
+.info-box {
+    ul {
+        list-style: none;
+        margin-top: 15px;
+        li {
+            margin-left: -20px;
+            color: white;
+            font-size: 10pt;
+            font-family: 'Roboto', sans-serif;
+            span {
+                font-weight: bold;
+                color: white;
+                font-size: 9pt;
+                font-family: 'Roboto', sans-serif;
+            }
+        }
+    }
 }
 
 .journey-title {
@@ -13,10 +49,6 @@ label {
     color: black;
 }
 
-.map-container {
-    //border: 2px solid #343a40;
-}
-
 #map {
     border: 2px solid #343a40;
     width: 66%;
@@ -24,11 +56,12 @@ label {
 }
 
 #dropdown {
-    width: 30%;
+    width: 368px;
+    margin-right: 10px;
 }
 
-#alerts {
-    width: 40%;
+.alert {
+    width: 368px;
 }
 
 .view-content {
@@ -40,5 +73,8 @@ label {
 .selector {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-start;
+    margin-bottom: 10px;
 }
+
+//style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start;"
