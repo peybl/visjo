@@ -13,7 +13,7 @@ const apiToken = environment.MAPBOX_API_KEY;
 @Component({
   selector: 'app-journey-view',
   templateUrl: './journey-view.component.html',
-  styleUrls: ['./journey-view.component.sass']
+  styleUrls: ['./journey-view.component.scss']
 })
 export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
   private sub: any;

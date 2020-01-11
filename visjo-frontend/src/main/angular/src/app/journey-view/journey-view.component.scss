@@ -1,0 +1,44 @@
+label {
+    color: white;
+}
+
+.container {
+    text-align: center;
+}
+
+.journey-title {
+    font-family: 'Shadows Into Light', cursive;
+    font-size: xx-large;
+    text-align: center;
+    color: black;
+}
+
+.map-container {
+    //border: 2px solid #343a40;
+}
+
+#map {
+    border: 2px solid #343a40;
+    width: 66%;
+    height: 85vh;
+}
+
+#dropdown {
+    width: 30%;
+}
+
+#alerts {
+    width: 40%;
+}
+
+.view-content {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+}
+
+.selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

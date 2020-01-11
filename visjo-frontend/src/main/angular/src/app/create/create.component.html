@@ -1,17 +1,31 @@
 <br/>
 <form [formGroup]="journeyForm">
-    <div class="form-group">
-        <label for="title">Journey title</label>
-        <input formControlName="title" class="form-control" type="text" id="title" />
+    <div class="form-group container">
+        <label class="journey-title" for="title">
+            Journey title
+        </label>
+        <div class="journey-title-input">
+            <input formControlName="title" class="form-control" type="text" id="title" />
+        </div>
     </div>
 
-    <ul class="shadow-sm p-3 mb-5 bg-white rounded">
+    <div *ngIf="images.length > 0" class="container">
+        <label class="journey-title" for="image-title">
+            Images
+        </label>
+    </div>
+
+    <div *ngIf="images.length < 1" class="alert alert-info" role="alert">
+        Click 'Select File' button to select files and 'Upload' button to upload your images!
+    </div>
+
+    <ul *ngIf="images.length > 0" class="shadow-sm p-3 mb-5 rounded">
         <li class="row" style="list-style:none; background-image:none; background-repeat:none; background-position:0;"
             *ngFor="let image of images; let i = index">
             <div class="form-group col-4" style="margin: auto 0;">
                 <img src="{{image.imageUrl}}" class="img-fluid" alt="image.title"/>
             </div>
-            <div class="col-8 image">
+            <div class="metadata" class="col-8 image">
                 <div class="form-group">
                     <label for="title-{{i}}">Title</label>
                     <input id="title-{{i}}" class="form-control" type="text" value="{{image.name}}" />
@@ -32,15 +46,24 @@
                     <input id="date-{{i}}" class="form-control" type="text" value="{{image.date.toISOString()}}" />
                 </div>
             </div>
-            <hr class="col-12" style="margin:10px; padding:0px">
+            <hr class="separator col-12">
         </li>
     </ul>
+
+    <div *ngIf="uploadSuccess; else uploadError === false" class="alert alert-success" role="alert">
+        Images successfully uploaded!
+    </div>
+    <ng-template #uploadError>
+        <div class="alert alert-error" role="alert">
+            An error occurred while uploading images.
+        </div>
+    </ng-template>
 
     <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
         <div class="btn-group mr-2" role="group" aria-label="Image select">
             <input style="display: none" type="file" (change)="onFileChanged($event)" multiple #fileInput>
-            <button id="upload" class="btn btn-light" (click)="fileInput.click()">Select File</button>
-            <button class="btn btn-primary" (click)="onUpload()">Upload!</button>
+            <button id="upload" class="btn btn-dark" (click)="fileInput.click()">Select File</button>
+            <button class="btn btn-primary" (click)="onUpload()">Upload</button>
         </div>
     </div>
 </form>

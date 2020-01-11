@@ -1,19 +1,30 @@
+<br/>
 <!-- this is needed for appropriate rendering of the map, no idea why it's not imported from node_modules -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
 
-<div class="" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start;">
+<div class="container">
+    <label class="journey-title" for="title">
+        Journey View
+    </label>
+</div>
+<br/>
 
-    <div class="" style="width: 25%;">
-        <div class="">
-            <select [(ngModel)]="selectedJourneyId">
-                <option *ngFor="let journey of journeys" value="{{journey.id}}">{{journey.name}}</option>
-            </select>
-            <button (click)="getJourney()">Get</button>
-        </div>
+<div class="selector">
+    <select class="browser-default custom-select" [(ngModel)]="selectedJourneyId">
+        <option selected hidden>Select a journey</option>
+        <option *ngFor="let journey of journeys" value="{{journey.id}}">{{journey.name}}</option>
+    </select>
+
+    <button class="btn btn-dark btn-sm" (click)="getJourney()">Load journey</button>
+</div>
+
+<div class="view-content">
+    <div class="" style="width: 30%;">
+        
         <div *ngIf="selectedJourney$ | async; let journey; else noJourney">
-            <span>GPS Map for Journey {{journey.name}}</span>
+            
             <!-- <ul>
                 <li *ngFor="let image of imagesOfJourney$ | async" (click)="focusImage(image)">
                     ID: {{image.id}} Name: {{image.name}} Long: {{image.longitude}} Lat: {{image.latitude}}
@@ -36,13 +47,18 @@
         </div>
     </div>
 
-    <div id="map" style="width: 75%; height: 85vh;"></div>
+    <div id="map"></div>
+    
 
 </div>
 
 <ng-template #noJourney>
-    No Journey to show.
+    <div class="alert alert-info" role="alert">
+        No journey to show.
+    </div>
 </ng-template>
 <ng-template #noImages>
-    No images in journey.
+    <div class="alert alert-info" role="alert">
+        No images in journey.
+    </div>
 </ng-template>

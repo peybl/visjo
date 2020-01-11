@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import * as EXIF from '../exported-libraries/exif-js/exif';
 import {isArray} from 'util';
@@ -11,9 +11,11 @@ import { ImagesService } from '../services/Images/images.service';
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.sass']
+  styleUrls: ['./create.component.scss']
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit {
+    uploadSuccess: boolean;
+
     public journeyForm: FormGroup;
     public journey: Journey;
 
@@ -29,6 +31,10 @@ export class CreateComponent {
             images: this.formBuilder.array([])
         });
         this.journey = new Journey();
+    }
+
+    ngOnInit() {
+        this.uploadSuccess = undefined;
     }
 
     getEXIFData(file) {
@@ -162,7 +168,14 @@ export class CreateComponent {
             image.journey = journey.id; // TODO find better way
             image.timestamp = this.getUtcString();
             this.imageService.postNewImage(image)
-                .subscribe(image => console.log("uploaded image: " + image));
+                .subscribe((image) => {
+                    console.log("uploaded image: " + image);
+                    if (image) {
+                        this.uploadSuccess = true;
+                    } else {
+                        this.uploadSuccess = false;
+                    }
+                });
         }
     }
 
