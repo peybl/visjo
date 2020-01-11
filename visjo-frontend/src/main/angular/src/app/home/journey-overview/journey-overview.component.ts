@@ -7,7 +7,6 @@ import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
 import { Router } from '@angular/router';
 import {ImagesService} from '../../services/Images/images.service';
 import {Image} from "../../dtos/Image";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-journey-overview',
@@ -16,7 +15,6 @@ import {Observable} from "rxjs";
   styles: [` .img-fluid{ min-width:100%}`]
 })
 export class JourneyOverviewComponent implements OnInit {
-
   shareLinkDialogRef: MatDialogRef<ShareDialogComponent>;
   emptyJourneyDescription: string;
   journeys: Journey[] = [];

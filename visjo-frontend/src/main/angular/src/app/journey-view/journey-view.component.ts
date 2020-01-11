@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { JourneyService } from '../services/Journey/journey.service';
 import { Journey } from '../dtos/Journey';
 import { Observable } from 'rxjs';
@@ -15,7 +15,9 @@ const apiToken = environment.MAPBOX_API_KEY;
   templateUrl: './journey-view.component.html',
   styleUrls: ['./journey-view.component.sass']
 })
-export class JourneyViewComponent implements OnInit, AfterViewInit {
+export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
+  private sub: any;
+  id: number;
   selectedJourney$ : Observable<Journey>;
   imagesOfJourney$ : Observable<Image[]>;
   // @Input()
@@ -31,6 +33,9 @@ export class JourneyViewComponent implements OnInit, AfterViewInit {
       private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.sub = this.route.params.subscribe(params => {
+      this.id = +params['id'];
+    });
     this.selectedJourneyId = this.route.snapshot.params["id"];
     const self = this;
     this.journeyService.getJourneys().subscribe(jours => {
@@ -43,6 +48,12 @@ export class JourneyViewComponent implements OnInit, AfterViewInit {
     if (this.selectedJourneyId !== undefined) {
       this.getJourney();
     }
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.sub.unsubscribe();
   }
 
   getJourney() : void {
