@@ -153,6 +153,14 @@ You also need to install docker-compose by entering the following command in ter
 
 > ```sudo chmod +x /usr/local/bin/docker-compose```
 
+You can check the version with:
+
+> ```docker-compose --version```
+
+If you get 'No such file or directory error' run the following command:
+
+> ```sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose```
+
 Once the build is successful and docker-compose is installed, run the following command to run the application:
 
 > ```~/visjo$ ./scripts/run.sh```
