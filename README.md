@@ -145,3 +145,14 @@ After that you can open the project folder in your code editor. First you need t
 
 > ```~/visjo$ ./scripts/build.sh```
 
+You also need to install docker-compose by entering the following command in terminal:
+
+> ```sudo curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose```
+
+... and apply executable permissions to the binary:
+
+> ```sudo chmod +x /usr/bin/docker-compose```
+
+Once the build is successful and docker-compose is installed, run the following command to run the application:
+
+> ```~/visjo$ ./scripts/run.sh```
