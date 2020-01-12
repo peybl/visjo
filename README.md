@@ -172,3 +172,11 @@ If you get the following error:
 you can delete the line '```name: visjo-net```' at the end of '```docker-compose.yml```' file and then run the command.
 
 This might take several minutes to complete. After that you can open a browser and see the application on ```https://localhost:8080```.
+
+After the changes you made in code you can run the following to recompile:
+
+> ```~/visjo$ ./scripts/restart.sh```
+
+For a clean run you can use the following command before running ```run.sh```:
+
+> ```~/visjo$ ./scripts/clean.sh```
