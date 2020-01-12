@@ -122,4 +122,5 @@ Use the following command:
 
 After deciding the directory you want to clone visjo to type:
 
-> git clone https://github.com/peybl/visjo.git
+> ```git clone https://github.com/peybl/visjo.git```
+
