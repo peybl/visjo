@@ -109,6 +109,7 @@ To install Java use the following command:
 First, update the packages index and install the dependencies by typing:
 
 > ```sudo apt update```
+
 > ```sudo apt install software-properties-common apt-transport-https wget```
 
 Next, import the Microsoft GPG key using the following command:
@@ -122,6 +123,7 @@ And enable the Visual Studio Code repository by typing:
 Once the apt repository is enabled, install the latest version of Visual Code with:
 
 > ```sudo apt update```
+
 > ```sudo apt install code```
 
 Credit goes to https://linuxize.com/post/how-to-install-visual-studio-code-on-ubuntu-18-04/ for instructions and explanations.
