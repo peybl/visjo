@@ -169,6 +169,6 @@ If you get the following error:
 
 > ```ERROR: The compose file './docker-compose.yml' is invalid because: networks.visjo-net value Additional properties are not allowed ('name' was unexpected)```
 
-you can delete the line '```name: visjo-net```' at the end and then run the command.
+you can delete the line '```name: visjo-net```' at the end of '```docker-compose.yml```' file and then run the command.
 
 This might take several minutes to complete. After that you can open a browser and see the application on ```https://localhost:8080```.
