@@ -135,7 +135,7 @@ Use the following command:
 > ```sudo apt install git```
 
 
-### Cloning visjo
+### Cloning visjo and running the application
 
 After deciding the directory you want to clone visjo to type:
 
@@ -164,3 +164,11 @@ If you get 'No such file or directory error' run the following command:
 Once the build is successful and docker-compose is installed, run the following command to run the application:
 
 > ```~/visjo$ ./scripts/run.sh```
+
+If you get the following error:
+
+> ```ERROR: The compose file './docker-compose.yml' is invalid because: networks.visjo-net value Additional properties are not allowed ('name' was unexpected)```
+
+you can delete the line '```name: visjo-net```' at the end and then run the command.
+
+This might take several minutes to complete. After that you can open a browser and see the application on ```https://localhost:8080```.
