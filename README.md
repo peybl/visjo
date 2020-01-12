@@ -26,6 +26,7 @@ If you want to run Ubuntu in Windows via a virtual machine please follow the ins
 * Docker for Ubuntu
 * Node.js and npm
 * Angular/CLI
+* Java-JDK
 * A code editor (In this case Visual Studio Code)
 * Git (if not installed with Ubuntu already)
 
@@ -51,6 +52,14 @@ Automating Docker at system start is always recommended so you don't have to sta
 You can check the installed version of Docker by following command:
 
 > ```docker --version```
+
+You might get an error starting with
+
+> Got permission denied while trying to connect to the Docker daemon...
+
+at a later stage while building the project. This means that the user needs to be added to the group docker. You can add your user by doing so:
+
+> ```sudo usermod -a -G docker <Username>```
 
 Credit goes to https://phoenixnap.com/kb/how-to-install-docker-on-ubuntu-18-04 for instructions and explanations.
 
@@ -89,6 +98,12 @@ You can check the installed version with the following command:
 > ```ng --version```
 
 
+#### Java-JDK
+To install Java use the following command:
+
+> ```sudo apt install default-jdk```
+
+
 #### Visual Studio Code (Optional)
 
 First, update the packages index and install the dependencies by typing:
@@ -123,4 +138,8 @@ Use the following command:
 After deciding the directory you want to clone visjo to type:
 
 > ```git clone https://github.com/peybl/visjo.git```
+
+After that you can open the project folder in your code editor. First you need to build the project by running the following command:
+
+> ```~/visjo$ ./scripts/build.sh```
 
