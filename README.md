@@ -24,11 +24,13 @@ If you want to run Ubuntu in Windows via a virtual machine please follow the ins
 ### Installation Steps
 
 * Docker for Ubuntu
-* Node.js and npm
-* Angular/CLI
-* Java-JDK
+* Node.js and npm*
+* Angular/CLI*
+* Java-JDK*
 * A code editor (In this case Visual Studio Code)
 * Git (if not installed with Ubuntu already)
+
+<sub><sup>*Not necessarily needed since build installs these elements as well.</sup></sub>
 
 #### Docker For Ubuntu
 It's good to update the local database of software to make sure you've got access to the latest revisions. Therefore, open a terminal window and type:
