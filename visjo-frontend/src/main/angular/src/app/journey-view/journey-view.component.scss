@@ -12,7 +12,7 @@ label {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    width: 368px;
+    width: 363px;
     height: 80;
     background-color: #343a40;
     margin-bottom: 5px;
@@ -77,4 +77,9 @@ label {
     margin-bottom: 10px;
 }
 
-//style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start;"
+.images {
+    overflow-y: auto;
+    overflow-x: none;
+    height: 730px;
+    width: 375px;
+}
