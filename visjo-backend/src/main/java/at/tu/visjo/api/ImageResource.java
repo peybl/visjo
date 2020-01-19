@@ -102,7 +102,7 @@ public class ImageResource {
 	}
 
 	@GetMapping(value = "/s/{uuid}/image/{imageId}")
-	public ResponseEntity<byte[]> getForUser(@PathVariable("uuid") String uuid, @PathVariable("imageId") long imageId,
+	public ResponseEntity<byte[]> getForSharedJourney(@PathVariable("uuid") String uuid, @PathVariable("imageId") long imageId,
 			@RequestParam(name = "width", required = false) @Min(1) Integer width) {
 
 		SharedJourney sharedJourney = sharedJourneyService.getSharedJourney(uuid).get();	// Is safe because of security filter
@@ -113,5 +113,20 @@ public class ImageResource {
 		headers.setContentType(MediaType.parseMediaType(data.getSecond()));
 
 		return new ResponseEntity<>(data.getFirst(), headers, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/s/{uuid}/image")
+	public ResponseEntity getAllForSharedJourney(@PathVariable("uuid") String uuid) {
+
+		SharedJourney sharedJourney = sharedJourneyService.getSharedJourney(uuid).get();	// Is safe because of security filter
+		List<Image> images = imageService.getAllImagesOfJourney(sharedJourney.getJourney().getId());
+		if (!images.isEmpty()) {
+			List<ImageDto> dtos = images.stream()
+										.map(j -> modelMapper.map(j, ImageDto.class))
+										.collect(Collectors.toList());
+			return ResponseEntity.ok(dtos);
+		} else {
+			return ResponseEntity.ok("");
+		}
 	}
 }

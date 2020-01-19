@@ -51,6 +51,12 @@ public class ImageService {
 		return images;
 	}
 
+	public List<Image> getAllImagesOfJourney(long journeyId) {
+		List<Image> images = imageRepository.findAllByJourneyId(journeyId);
+		log.debug("Found {} images of journey with id={}", images.size(), journeyId);
+		return images;
+	}
+
 	public Image uploadImage(long userId, long journeyId, @NonNull String fileName, byte[] fileData, double latitude,
 			double longitude, String timestamp) {
 
