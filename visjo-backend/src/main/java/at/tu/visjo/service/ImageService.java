@@ -84,14 +84,22 @@ public class ImageService {
 		return image;
 	}
 
-	public Pair<byte[], String> downloadImage(long userId, long imageId, Integer width) {
+	public Pair<byte[], String> downloadImageOfUser(long userId, long imageId, Integer width) {
 		Optional<Image> image = imageRepository.findByIdAndUserId(imageId, userId);
-		if (image.isEmpty()) {
+		return downloadImage(image.orElse(null), width);
+	}
+
+	public Pair<byte[], String> downloadImageOfJourney(long journeyId, long imageId, Integer width) {
+		Optional<Image> image = imageRepository.findByIdAndJourneyId(imageId, journeyId);
+		return downloadImage(image.orElse(null), width);
+	}
+
+	private Pair<byte[], String> downloadImage(Image image, Integer width) {
+		if (image == null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No image with this ID found for the current user");
 		}
 
-		return serviceConnector.downloadFile(image.get()
-												  .getUrl(), width);
+		return serviceConnector.downloadFile(image.getUrl(), width);
 	}
 
 	public void deleteImage(long userId, long imageId) {

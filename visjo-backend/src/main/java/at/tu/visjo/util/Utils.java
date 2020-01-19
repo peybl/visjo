@@ -6,7 +6,7 @@ import lombok.NonNull;
 import java.util.Iterator;
 import java.util.List;
 
-public class Utils {
+public abstract class Utils {
 
 	public static <T extends Model> String modelsToString(@NonNull List<T> models) {
 		StringBuilder builder = new StringBuilder();

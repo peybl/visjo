@@ -16,4 +16,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
 	@Query("SELECT i FROM Image i WHERE i.user.id = :userId AND i.journey.id = :journeyId")
 	List<Image> findAllByUserIdAndJourneyId(long userId, long journeyId);
+
+	@Query("SELECT i FROM Image i WHERE i.id = :imageId AND i.journey.id = :journeyId")
+	Optional<Image> findByIdAndJourneyId(long imageId, long journeyId);
 }

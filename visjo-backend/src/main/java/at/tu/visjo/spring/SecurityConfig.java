@@ -1,5 +1,6 @@
 package at.tu.visjo.spring;
 
+import at.tu.visjo.security.SharedJourneyFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,6 +14,7 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
@@ -22,12 +24,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final UserDetailsService userDetailsService;
 	private final AuthenticationSuccessHandler authenticationSuccessHandler;
+	private final SharedJourneyFilter sharedJourneyFilter;
 
 	@Autowired
-	public SecurityConfig(UserDetailsService userDetailsService, AuthenticationSuccessHandler authenticationSuccessHandler) {
-
+	public SecurityConfig(UserDetailsService userDetailsService, AuthenticationSuccessHandler authenticationSuccessHandler,
+			SharedJourneyFilter sharedJourneyFilter) {
 		this.userDetailsService = userDetailsService;
 		this.authenticationSuccessHandler = authenticationSuccessHandler;
+
+		this.sharedJourneyFilter = sharedJourneyFilter;
+		this.sharedJourneyFilter.setAntPatterns("/s/**");
 	}
 
 	@Override
@@ -44,8 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers("/admin").hasRole("ADMIN")
 				.antMatchers("/user", "/journey/**", "/image/**").hasAnyRole("ADMIN", "USER")
+				.antMatchers("/s/**").permitAll()
 				.antMatchers("/").permitAll()
 				.and()
+			.addFilterAfter(sharedJourneyFilter, FilterSecurityInterceptor.class)
 			.formLogin()
 				.loginProcessingUrl("/login")
 				.successHandler(authenticationSuccessHandler)

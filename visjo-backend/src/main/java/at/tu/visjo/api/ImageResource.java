@@ -2,11 +2,12 @@ package at.tu.visjo.api;
 
 import at.tu.visjo.api.dto.ImageDto;
 import at.tu.visjo.persistence.model.Image;
+import at.tu.visjo.persistence.model.SharedJourney;
 import at.tu.visjo.security.UserContext;
 import at.tu.visjo.service.ImageService;
+import at.tu.visjo.service.SharedJourneyService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpHeaders;
@@ -26,45 +27,28 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/image")
 @Validated
 @Slf4j
 public class ImageResource {
 
 	private final ModelMapper modelMapper;
 	private final ImageService imageService;
+	private final SharedJourneyService sharedJourneyService;
 
 	@Autowired
-	public ImageResource(ModelMapper modelMapper, ImageService imageService) {
+	public ImageResource(ModelMapper modelMapper, ImageService imageService, SharedJourneyService sharedJourneyService) {
 		this.modelMapper = modelMapper;
 		this.imageService = imageService;
-
-		// Configure ModelMapper
-		PropertyMap<ImageDto, Image> imageDtoMapping = new PropertyMap<>() {
-
-			protected void configure() {
-				map().getJourney()
-					 .setId(source.getJourney());
-			}
-		};
-		PropertyMap<Image, ImageDto> imageDtoFieldMapping = new PropertyMap<>() {
-
-			protected void configure() {
-				map().setJourney(source.getJourney()
-									   .getId());
-			}
-		};
-		modelMapper.addMappings(imageDtoMapping);
-		modelMapper.addMappings(imageDtoFieldMapping);
+		this.sharedJourneyService = sharedJourneyService;
 	}
 
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/image/{id}")
 	public ResponseEntity<byte[]> getForUser(Principal principal, @PathVariable("id") long imageId,
 			@RequestParam(name = "width", required = false) @Min(1) Integer width) {
 
 		long userId = UserContext.getActiveUserId(principal);
 
-		Pair<byte[], String> data = imageService.downloadImage(userId, imageId, width);
+		Pair<byte[], String> data = imageService.downloadImageOfUser(userId, imageId, width);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType(data.getSecond()));
@@ -72,7 +56,15 @@ public class ImageResource {
 		return new ResponseEntity<>(data.getFirst(), headers, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "journey/{id}")
+	@DeleteMapping(value = "/image/{id}")
+	public ResponseEntity deleteForUser(Principal principal, @PathVariable("id") long imageId) {
+
+		long userId = UserContext.getActiveUserId(principal);
+		imageService.deleteImage(userId, imageId);
+		return ResponseEntity.ok("");
+	}
+
+	@GetMapping(value = "/image/journey/{id}")
 	public ResponseEntity getAllOfJourneyForUser(Principal principal, @PathVariable("id") long journeyId) {
 		long userId = UserContext.getActiveUserId(principal);
 
@@ -83,11 +75,11 @@ public class ImageResource {
 										.collect(Collectors.toList());
 			return ResponseEntity.ok(dtos);
 		} else {
-			return ResponseEntity.ok(null);
+			return ResponseEntity.ok("");
 		}
 	}
 
-	@PostMapping(consumes = { "multipart/form-data" })
+	@PostMapping(value = "/image", consumes = { "multipart/form-data" })
 	public ResponseEntity createImage(Principal principal, @RequestParam("journeyId") long journeyId,
 			@RequestParam("latitude") @Min(-90) @Max(90) double latitude,
 			@RequestParam("longitude") @Min(-180) @Max(180) double longitude, @RequestParam("timestamp") String timestamp,
@@ -107,5 +99,19 @@ public class ImageResource {
 		ImageDto dto = modelMapper.map(image, ImageDto.class);
 
 		return new ResponseEntity(dto, HttpStatus.CREATED);
+	}
+
+	@GetMapping(value = "/s/{uuid}/image/{imageId}")
+	public ResponseEntity<byte[]> getForUser(@PathVariable("uuid") String uuid, @PathVariable("imageId") long imageId,
+			@RequestParam(name = "width", required = false) @Min(1) Integer width) {
+
+		SharedJourney sharedJourney = sharedJourneyService.getSharedJourney(uuid).get();	// Is safe because of security filter
+		Pair<byte[], String> data = imageService.downloadImageOfJourney(sharedJourney.getJourney()
+																					 .getId(), imageId, width);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.parseMediaType(data.getSecond()));
+
+		return new ResponseEntity<>(data.getFirst(), headers, HttpStatus.OK);
 	}
 }
