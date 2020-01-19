@@ -72,6 +72,16 @@ public class JourneyResource {
 		return new ResponseEntity(modelMapper.map(journey, JourneyDto.class), HttpStatus.CREATED);
 	}
 
+	@PutMapping(value = "/journey/{id}")
+	public ResponseEntity updateJourney(Principal principal, @PathVariable("id") Long journeyId,
+			@RequestParam("name") String name) {
+
+		long userId = UserContext.getActiveUserId(principal);
+
+		journeyService.updateJourneyOfUser(userId, journeyId, name);
+		return ResponseEntity.ok("");
+	}
+
 	@PutMapping(value = "/journey/{id}/share")
 	public ResponseEntity shareJourney(Principal principal, @PathVariable("id") Long journeyId) {
 		long userId = UserContext.getActiveUserId(principal);

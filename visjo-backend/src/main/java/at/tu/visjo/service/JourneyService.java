@@ -7,7 +7,9 @@ import at.tu.visjo.persistence.repository.UserRepository;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,5 +48,15 @@ public class JourneyService {
 		journey = journeyRepository.saveAndFlush(journey);
 		log.debug("Created: {}", journey);
 		return journey;
+	}
+
+	public void updateJourneyOfUser(long userId, long journeyId, @NonNull String name) {
+		Optional<Journey> journey = getJourneyOfUser(userId, journeyId);
+		if (journey.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No journey with this ID found for the current user");
+		}
+
+		journey.get().setName(name);
+		journeyRepository.saveAndFlush(journey.get());
 	}
 }
