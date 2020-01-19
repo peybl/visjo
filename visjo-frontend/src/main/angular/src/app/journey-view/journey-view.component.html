@@ -23,8 +23,7 @@
 
 <div class="view-content">
     <div class="" style="width: 30%;">
-            
-        <div *ngIf="selectedJourney$ | async; let journey; else noJourney">
+        <div class="images" *ngIf="selectedJourney$ | async; let journey; else noJourney">
             
             <!-- <ul>
                 <li *ngFor="let image of imagesOfJourney$ | async" (click)="focusImage(image)">
@@ -34,13 +33,13 @@
 
             <div *ngFor="let image of imagesOfJourney$ | async" (click)="focusImage(image)">
                 <div class="info-container" (click)="focusImage()">
-                    <img class="thumbnail" src="https://i.picsum.photos/id/581/536/354.jpg" alt="">
+                <img class="thumbnail" src="http://localhost:8080/image/{{image.id}}" alt="">
                     <div class="info-box">
                         <ul>
                             <li><span>ID</span></li>
                             <li><span>Latitude</span></li>
                             <li><span>Longitude</span></li>
-                            <li><span>Name</span></li>
+                            <!-- <li><span>Name</span></li> -->
                             <li><span>Date</span></li>
                             <li><span>Timestamp</span></li>
                         </ul>
@@ -48,11 +47,11 @@
                     <div class="info-box">
                         <ul>
                             <li>: {{image.id}}</li>
-                            <li>: {{image.latitude}}</li>
-                            <li>: {{image.longitude}}</li>
-                            <li>: {{image.name}}</li>
-                            <li>: {{image.date}}</li>
-                            <li>: {{image.timestamp}}</li>
+                            <li>: {{image.latitude.toString().substring(0,8)}}...</li>
+                            <li>: {{image.longitude.toString().substring(0,8)}}...</li>
+                            <!-- <li>: {{image.name}}</li> -->
+                            <li>: {{image.timestamp.substring(0,10)}}</li>
+                            <li>: {{image.timestamp.substring(11,19)}} UTC</li>
                         </ul>
                     </div>
                 </div>

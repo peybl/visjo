@@ -12,15 +12,13 @@
                 <li class="nav-item">
                 <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
                 </li>
-                <!-- <li *ngIf="authenticated()" class="nav-item"> -->
-                <li class="nav-item">
+                <li *ngIf="authenticated()" class="nav-item">
                 <a class="nav-link" routerLink="/create" routerLinkActive="active">Create</a>
                 </li>
                 <li *ngIf="authenticated()" class="nav-item">
                 <a class="nav-link" routerLink="/edit" routerLinkActive="active">Edit</a>
                 </li>
-                <!-- <li *ngIf="authenticated()" class="nav-item"> -->
-                <li class="nav-item">
+                <li *ngIf="authenticated()" class="nav-item">
                 <a class="nav-link" routerLink="/journeyView" routerLinkActive="active">Journey View</a>
                 </li>
             </ul>
