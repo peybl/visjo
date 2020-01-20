@@ -1,12 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { JourneyService } from 'src/app/services/Journey/journey.service';
 import { Journey } from '../../dtos/Journey';
+import { SharedJourney } from '../../dtos/SharedJourney'
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
 import { Router } from '@angular/router';
 import {ImagesService} from '../../services/Images/images.service';
 import {Image} from "../../dtos/Image";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-journey-overview',
@@ -14,10 +17,13 @@ import {Image} from "../../dtos/Image";
   styleUrls: ['./journey-overview.component.scss'],
   styles: [` .img-fluid{ min-width:100%}`]
 })
-export class JourneyOverviewComponent implements OnInit {
+export class JourneyOverviewComponent implements OnInit, OnDestroy {
+
+  private unsubscribe$ = new Subject<void>;
   shareLinkDialogRef: MatDialogRef<ShareDialogComponent>;
   emptyJourneyDescription: string;
   journeys: Journey[] = [];
+  shareLink: string;
   
   // OLD DATA:
   //
@@ -82,6 +88,11 @@ export class JourneyOverviewComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   authenticated(): boolean {
     return this.auth.authenticated;
   }
@@ -91,8 +102,18 @@ export class JourneyOverviewComponent implements OnInit {
     //link to edit journey
   }
 
-  onClickShare() {
-    console.log("share icon clicked!");
-    this.shareLinkDialogRef = this.dialog.open(ShareDialogComponent);
+  onClickShare(jour: Journey) {
+    this.journeyService.getSharingLinkForJourney(jour)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(item => {
+      this.shareLink = item.shareUrl
+    });
+    this.shareLinkDialogRef = this.dialog.open(ShareDialogComponent,
+      {
+        data: {
+          dataKey: this.shareLink
+        }
+      });
+    console.log("shareLink: " + this.shareLink);
   }
 }

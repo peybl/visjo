@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-share-dialog',
@@ -7,9 +7,13 @@ import { MatDialogRef } from '@angular/material';
   styleUrls: ['./share-dialog.component.scss']
 })
 export class ShareDialogComponent implements OnInit {
-  link: string = 'https:...';
+  link: string = '';
 
-  constructor(public dialogRef: MatDialogRef<ShareDialogComponent>) { }
+  constructor(public dialogRef: MatDialogRef<ShareDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any
+              ) {
+                this.link = this.data;
+               }
 
   ngOnInit() {
   }
