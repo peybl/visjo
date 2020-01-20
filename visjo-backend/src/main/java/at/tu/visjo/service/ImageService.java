@@ -57,6 +57,17 @@ public class ImageService {
 		return images;
 	}
 
+	public void updateImage(long userId, long imageId, double latitude, double longitude) {
+		Optional<Image> image = getImageOfUser(userId, imageId);
+		if (image.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No image with this ID found for the current user");
+		}
+
+		image.get().setLatitude(latitude);
+		image.get().setLongitude(longitude);
+		imageRepository.saveAndFlush(image.get());
+	}
+
 	public Image uploadImage(long userId, long journeyId, @NonNull String fileName, byte[] fileData, double latitude,
 			double longitude, String timestamp) {
 
