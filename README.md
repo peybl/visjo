@@ -1,25 +1,10 @@
 # visjo
 
-## Setup for Development in WSL
-
-*Prerequisite:* Windows 10
-
-Follow https://code.visualstudio.com/docs/remote/wsl#_installation
-
-Install Docker on Windows.
-
-Follow the steps in https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly
-
-Open the Project in WSL: https://code.visualstudio.com/docs/remote/wsl#_open-a-folder-in-wsl
-
-Execute scripts in folder /scripts (NOTICE: file endings have to be LF, otherwise the scripts won't work)
-
-
 ## Setup for Development in Unix Systems
 
 *Prerequisite:* Ubuntu 18.x, user with sudo priviledges
 
-If you want to run Ubuntu in Windows via a virtual machine please follow the instructions showed in this video: https://www.youtube.com/watch?v=diIW3fgewhI
+If you want to run Ubuntu in Windows via a virtual machine please follow the instructions shown in this video: <https://www.youtube.com/watch?v=diIW3fgewhI>
 
 ### Installation Steps
 
@@ -63,7 +48,7 @@ at a later stage while building the project. This means that the user needs to b
 
 > ```sudo usermod -a -G docker <Username>```
 
-Credit goes to https://phoenixnap.com/kb/how-to-install-docker-on-ubuntu-18-04 for instructions and explanations.
+Credit goes to <https://phoenixnap.com/kb/how-to-install-docker-on-ubuntu-18-04> for instructions and explanations.
 
 
 #### Node.js and npm
@@ -86,7 +71,7 @@ You can verify the installation of nodejs and npm by checking their versions:
 
 > ```npm --version```
 
-Credit goes to https://linuxize.com/post/how-to-install-node-js-on-ubuntu-18.04/ for instructions and explanations.
+Credit goes to <https://linuxize.com/post/how-to-install-node-js-on-ubuntu-18.04/> for instructions and explanations.
 
 
 #### Angular/CLI
@@ -101,6 +86,7 @@ You can check the installed version with the following command:
 
 
 #### Java-JDK
+
 To install Java use the following command:
 
 > ```sudo apt install default-jdk```
@@ -128,7 +114,7 @@ Once the apt repository is enabled, install the latest version of Visual Code wi
 
 > ```sudo apt install code```
 
-Credit goes to https://linuxize.com/post/how-to-install-visual-studio-code-on-ubuntu-18-04/ for instructions and explanations.
+Credit goes to <https://linuxize.com/post/how-to-install-visual-studio-code-on-ubuntu-18-04/> for instructions and explanations.
 
 #### Git
 
@@ -182,3 +168,40 @@ After the changes you made in code you can run the following to recompile:
 For a clean run you can use the following command before running ```run.sh```:
 
 > ```~/visjo$ ./scripts/clean.sh```
+
+## Setup for Development in WSL
+
+*Prerequisite:* Windows 10 Build 19018 or higher, *LOTS* of RAM
+
+### Installation Steps for Windows
+
+* Install WSL (Windows Subsystem for Linux) and enable WSL 2 (see below)
+* Install Docker Desktop Edge 2.1.6.0 or later (see below)
+* Install VS Code (recommended)
+* Install GIT in WSL
+    > ````sudo apt-get install git````
+* Clone the repository into the WSL folder of your choice
+* Start VS Code in WSL
+    > ````wsl code .````
+* Wait for VS Code to install the additional tools for WSL
+* (recommended) Install the VS Code Remote Development Extension Pack
+* Run the script *build.sh*
+    > ````scripts/build.sh````
+* If everything is configured correctly, dependencies and Docker Containers should be set up.
+* Run the project with *run.sh*
+    > ````scripts/run.sh````
+* If you want to reload the project (after implementing changes in the code), you can either use the provided script *restart.sh* or just restart the Docker container *visjo*
+
+#### Installing and enabling WSL 2
+
+Follow the steps at <https://docs.microsoft.com/en-us/windows/wsl/wsl2-install>
+
+#### Installing Docker Desktop Edge
+
+Download, install and follow the steps at <https://docs.docker.com/docker-for-windows/wsl-tech-preview/>
+
+### Troubleshooting
+
+#### Line endings
+
+Some errors occur because the line endings are not set to **\LF**, for example if you clone the project into a Windows (non-WSL) part of your Computer. That's why it's recommended to clone the project to a WSL folder. You can, of course, also configure GIT that it changes those automatically.
