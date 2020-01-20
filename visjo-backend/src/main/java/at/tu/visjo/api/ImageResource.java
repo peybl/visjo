@@ -64,6 +64,16 @@ public class ImageResource {
 		return ResponseEntity.ok("");
 	}
 
+	@PutMapping(value = "/image/{id}")
+	public ResponseEntity updateForUser(Principal principal, @PathVariable("id") long imageId,
+			@RequestParam("latitude") @Min(-90) @Max(90) double latitude,
+			@RequestParam("longitude") @Min(-180) @Max(180) double longitude) {
+
+		long userId = UserContext.getActiveUserId(principal);
+		imageService.updateImage(userId, imageId, latitude, longitude);
+		return ResponseEntity.ok("");
+	}
+
 	@GetMapping(value = "/image/journey/{id}")
 	public ResponseEntity getAllOfJourneyForUser(Principal principal, @PathVariable("id") long journeyId) {
 		long userId = UserContext.getActiveUserId(principal);
