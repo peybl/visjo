@@ -1,6 +1,6 @@
 export class SharedJourney {
     id: number;
-    shareUrl: string;
+    url: string;
 
     constructor() {}
 }

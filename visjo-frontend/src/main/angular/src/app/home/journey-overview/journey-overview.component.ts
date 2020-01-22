@@ -19,7 +19,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class JourneyOverviewComponent implements OnInit, OnDestroy {
 
-  private unsubscribe$ = new Subject<void>;
+  private unsubscribe$ = new Subject<void>();
   shareLinkDialogRef: MatDialogRef<ShareDialogComponent>;
   emptyJourneyDescription: string;
   journeys: Journey[] = [];
@@ -103,10 +103,11 @@ export class JourneyOverviewComponent implements OnInit, OnDestroy {
   }
 
   onClickShare(jour: Journey) {
+      debugger;
     this.journeyService.getSharingLinkForJourney(jour)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(item => {
-      this.shareLink = item.shareUrl
+      this.shareLink = item.url;
     });
     this.shareLinkDialogRef = this.dialog.open(ShareDialogComponent,
       {

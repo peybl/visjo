@@ -12,7 +12,7 @@ export class ShareDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<ShareDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any
               ) {
-                this.link = this.data;
+                this.link = this.data.dataKey;
                }
 
   ngOnInit() {
