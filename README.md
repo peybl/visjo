@@ -1,4 +1,4 @@
-# visjo
+# <img alt="visjo" width="400px" height="auto" src="https://github.com/peybl/visjo/blob/master/logo-img.png" />
 
 ## Setup for Development in Unix Systems
 
