@@ -11,11 +11,11 @@
                             </mat-icon>
                         </button>
                         {{journey.name}}
-                        <button class="edit-icon" mat-icon-button>
+                        <!--<button class="edit-icon" mat-icon-button>
                             <mat-icon (click)="onClickEdit()" aria-hidden="false" aria-label="edit icon">
                                 edit
                             </mat-icon>
-                        </button>
+                        </button>-->
                     </div>
                     <img [routerLink]="['/journeyView', journey.id]" style="width: 510px; height: 286px; cursor: pointer;" src={{journey.images[0]?.imageUrl}}>
                     <div class="card-footer text-muted">
