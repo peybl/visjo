@@ -120,7 +120,7 @@ Credit goes to <https://linuxize.com/post/how-to-install-visual-studio-code-on-u
 
 Use the following command:
 
-> ```sudo apt install git```
+> ```sudo apt-get install git```
 
 
 ### Cloning visjo and running the application
