@@ -21,7 +21,7 @@ export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedJourney$ : Observable<Journey>;
   imagesOfJourney$ : Observable<Image[]>;
   
-  selectedJourneyId : string | number;
+  selectedJourneyIdOrUuid : string | number;
   private journeyViaUuid = false;
   journeys: Journey[];
 
@@ -36,12 +36,12 @@ export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       if (params["id"]) {
-        this.selectedJourneyId = parseInt(params['id']); // id is number
-        if (isNaN(this.selectedJourneyId))
-          this.selectedJourneyId = undefined;
+        this.selectedJourneyIdOrUuid = parseInt(params['id']); // id is number
+        if (isNaN(this.selectedJourneyIdOrUuid))
+          this.selectedJourneyIdOrUuid = undefined;
       }
       else if (params["uuid"]) {
-        this.selectedJourneyId = params["uuid"]; // uuid is string
+        this.selectedJourneyIdOrUuid = params["uuid"]; // uuid is string
         this.journeyViaUuid = true;
       }
     });
@@ -53,7 +53,7 @@ export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (this.selectedJourneyId !== undefined) {
+    if (this.selectedJourneyIdOrUuid !== undefined) {
       if (this.journeyViaUuid) {
         this.getJourneyFromUuid();
       }
@@ -70,22 +70,22 @@ export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getJourney() : void {
-    if (typeof this.selectedJourneyId === "string")
-        this.selectedJourneyId = parseInt(this.selectedJourneyId);
-    if (this.selectedJourneyId === undefined)
+    if (typeof this.selectedJourneyIdOrUuid === "string")
+        this.selectedJourneyIdOrUuid = parseInt(this.selectedJourneyIdOrUuid);
+    if (this.selectedJourneyIdOrUuid === undefined)
       return;
-    console.debug("getting journey with id " + this.selectedJourneyId);
-    this.selectedJourney$ = this.journeyService.getJourneyById(this.selectedJourneyId);
-    this.imagesOfJourney$ = this.imageService.getImagesForJourney(this.selectedJourneyId);
+    console.debug("getting journey with id " + this.selectedJourneyIdOrUuid);
+    this.selectedJourney$ = this.journeyService.getJourneyById(this.selectedJourneyIdOrUuid);
+    this.imagesOfJourney$ = this.imageService.getImagesForJourney(this.selectedJourneyIdOrUuid);
     this.imagesOfJourney$.subscribe(images => this.drawMarkersOnMap(images));
   }
 
   getJourneyFromUuid() : void {
-    if (this.selectedJourneyId === undefined)
+    if (this.selectedJourneyIdOrUuid === undefined)
       return;
-    console.debug("getting sharde journey with uuid " + this.selectedJourneyId);
+    console.debug("getting shared journey with uuid " + this.selectedJourneyIdOrUuid);
     let shj = new SharedJourney();
-    shj.uuid = this.selectedJourneyId.toString();
+    shj.uuid = this.selectedJourneyIdOrUuid.toString();
     this.selectedJourney$ = this.journeyService.getJourneyFromSharedJourney(shj);
     this.imagesOfJourney$ = this.imageService.getImagesForSharedJourney(shj);
     this.imagesOfJourney$.subscribe(images => this.drawMarkersOnMap(images));

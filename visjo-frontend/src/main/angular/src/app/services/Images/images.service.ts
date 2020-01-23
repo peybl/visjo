@@ -108,6 +108,6 @@ export class ImagesService extends ABaseService{
       uuid = sharedJourneyOrUuid;
     else
       uuid = sharedJourneyOrUuid.uuid;
-      return uuid;
+    return uuid;
   }
 }

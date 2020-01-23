@@ -1,18 +1,17 @@
 export class SharedJourney {
     id: number;
-    private _uuid: string;
+    url: string;
 
-    get uuid(): string {
-        return this._uuid;
+    get uuid() {
+        return this.url.replace("/s/", "");
     }
+
     set uuid(value: string) {
         if (value.includes("/s/"))
-            this._uuid = value.substring(value.indexOf("/s/")+3);
+            this.url = value;
         else
-            this._uuid = value;
+            this.url = "/s/" +  value;
     }
-
-
 
     constructor() {}
 }

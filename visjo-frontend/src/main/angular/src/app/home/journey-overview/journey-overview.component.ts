@@ -76,18 +76,19 @@ export class JourneyOverviewComponent implements OnInit, OnDestroy {
   }
 
   onClickShare(jour: Journey) {
-      // debugger;
     this.journeyService.getSharingLinkForJourney(jour)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(item => {
-      this.shareLink = item.uuid;
+      this.shareLink = item.url;
     });
-    this.shareLinkDialogRef = this.dialog.open(ShareDialogComponent,
-      {
-        data: {
-          dataKey: this.shareLink
-        }
-      });
+    if (this.shareLink) {
+      this.shareLinkDialogRef = this.dialog.open(ShareDialogComponent,
+        {
+          data: {
+            dataKey: this.shareLink.substring(this.shareLink.indexOf("/s/")+3)
+          }
+        });
+    }
     console.log("shareLink: " + this.shareLink);
   }
 

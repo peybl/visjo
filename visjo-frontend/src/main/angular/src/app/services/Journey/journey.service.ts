@@ -134,7 +134,7 @@ export class JourneyService extends ABaseService {
    * @returns the Journey gotten from the URL
    */
   getJourneyFromSharedJourney(sharedJourney: SharedJourney): Observable<Journey> {
-    const url = this.shareUrlPart + "/" + sharedJourney.uuid;
+    const url = sharedJourney.url;
 
     return this.http.get<Journey>(url)
     .pipe(
