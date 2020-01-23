@@ -32,7 +32,7 @@
             </ul> -->
 
             <div *ngFor="let image of imagesOfJourney$ | async" (click)="focusImage(image)">
-                <div class="info-container" (click)="focusImage()">
+                <div class="info-container">
                 <img class="thumbnail" src="http://localhost:8080/image/{{image.id}}" alt="">
                     <div class="info-box">
                         <ul>
