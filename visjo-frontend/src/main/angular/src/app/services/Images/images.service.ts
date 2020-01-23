@@ -6,6 +6,7 @@ import { Image } from 'src/app/dtos/Image';
 import { Journey } from 'src/app/dtos/Journey';
 import { tap, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { SharedJourney } from 'src/app/dtos/SharedJourney';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,6 @@ export class ImagesService extends ABaseService{
       super(messageService);
   }
 
-  // untested
   getImagesForJourney(journeyOrId: Journey | number) : Observable<Image[]> {
     let id : number;
     if (typeof journeyOrId === "number")
@@ -70,6 +70,21 @@ export class ImagesService extends ABaseService{
       .pipe(
         tap((img) => this.log("POSTed image " + img.id)),
         catchError(this.handleError<Image>("POST Image"))
+      );
+  }
+
+  // untested
+  getImagesForSharedJourney(sharedJourneyOrUuid: SharedJourney | string) : Observable<Image[]> {
+    let uuid : string;
+    if (typeof sharedJourneyOrUuid === "string")
+      uuid = sharedJourneyOrUuid;
+    else
+      uuid = sharedJourneyOrUuid.url.substring(sharedJourneyOrUuid.url.indexOf("/s/")+3);
+    const url = this.imageUrlBase + this.journeySubUrl + "/" + uuid;
+    return this.http.get<Image[]>(url)
+      .pipe(
+        tap(() => this.log("fetched Images for Journey " + uuid)),
+        catchError(this.handleError<Image[]>("GET getImagesForJourney", []))
       );
   }
 }
