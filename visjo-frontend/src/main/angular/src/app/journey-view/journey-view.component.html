@@ -24,12 +24,6 @@
 <div class="view-content">
     <div class="" style="width: 30%;">
         <div class="images" *ngIf="selectedJourney$ | async; let journey; else noJourney">
-            
-            <!-- <ul>
-                <li *ngFor="let image of imagesOfJourney$ | async" (click)="focusImage(image)">
-                    ID: {{image.id}} Name: {{image.name}} Long: {{image.longitude}} Lat: {{image.latitude}}
-                </li>
-            </ul> -->
 
             <div *ngFor="let image of imagesOfJourney$ | async" (click)="focusImage(image)">
                 <div class="info-container">

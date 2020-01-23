@@ -7,6 +7,7 @@ import { ImagesService } from '../services/Images/images.service';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import * as L from "leaflet";
+import { SharedJourney } from '../dtos/SharedJourney';
 
 const apiToken = environment.MAPBOX_API_KEY;
 
@@ -17,11 +18,11 @@ const apiToken = environment.MAPBOX_API_KEY;
 })
 export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
   private sub: any;
-  id: number;
   selectedJourney$ : Observable<Journey>;
   imagesOfJourney$ : Observable<Image[]>;
-  // @Input()
-  selectedJourneyId : number;
+  
+  selectedJourneyId : string | number;
+  private journeyViaUuid = false;
   journeys: Journey[];
 
   // GPS stuff
@@ -34,9 +35,16 @@ export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.id = +params['id'];
+      if (params["id"]) {
+        this.selectedJourneyId = parseInt(params['id']); // id is number
+        if (isNaN(this.selectedJourneyId))
+          this.selectedJourneyId = undefined;
+      }
+      else if (params["uuid"]) {
+        this.selectedJourneyId = params["uuid"]; // uuid is string
+        this.journeyViaUuid = true;
+      }
     });
-    this.selectedJourneyId = this.route.snapshot.params["id"];
     const self = this;
     this.journeyService.getJourneys().subscribe(jours => {
       self.journeys = jours;
@@ -46,7 +54,12 @@ export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     if (this.selectedJourneyId !== undefined) {
-      this.getJourney();
+      if (this.journeyViaUuid) {
+        this.getJourneyFromUuid();
+      }
+      else {
+        this.getJourney();
+      }
     }
   }
 
@@ -64,6 +77,17 @@ export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
     console.debug("getting journey with id " + this.selectedJourneyId);
     this.selectedJourney$ = this.journeyService.getJourneyById(this.selectedJourneyId);
     this.imagesOfJourney$ = this.imageService.getImagesForJourney(this.selectedJourneyId);
+    this.imagesOfJourney$.subscribe(images => this.drawMarkersOnMap(images));
+  }
+
+  getJourneyFromUuid() : void {
+    if (this.selectedJourneyId === undefined)
+      return;
+    console.debug("getting sharde journey with uuid " + this.selectedJourneyId);
+    let shj = new SharedJourney();
+    shj.uuid = this.selectedJourneyId.toString();
+    this.selectedJourney$ = this.journeyService.getJourneyFromSharedJourney(shj);
+    this.imagesOfJourney$ = this.imageService.getImagesForSharedJourney(shj);
     this.imagesOfJourney$.subscribe(images => this.drawMarkersOnMap(images));
   }
 

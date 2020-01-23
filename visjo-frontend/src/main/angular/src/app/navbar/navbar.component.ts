@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   credentials = {username: '', password: ''};
   error = false;
+  uuid: string = "";
 
   constructor(private auth: AuthService, private http: HttpClient, private router: Router) {
     this.auth.fetchUsername();
@@ -36,4 +37,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
+  goToSharedJourneyView() {
+    if (this.uuid !== "")
+      this.router.navigate(["journeyView", {uuid: this.uuid}]);
+  }
 }

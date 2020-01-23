@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { JourneyService } from 'src/app/services/Journey/journey.service';
 import { Journey } from '../../dtos/Journey';
-import { SharedJourney } from '../../dtos/SharedJourney'
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ShareDialogComponent } from '../share-dialog/share-dialog.component';
@@ -77,11 +76,11 @@ export class JourneyOverviewComponent implements OnInit, OnDestroy {
   }
 
   onClickShare(jour: Journey) {
-      debugger;
+      // debugger;
     this.journeyService.getSharingLinkForJourney(jour)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(item => {
-      this.shareLink = item.url;
+      this.shareLink = item.uuid;
     });
     this.shareLinkDialogRef = this.dialog.open(ShareDialogComponent,
       {
@@ -90,5 +89,11 @@ export class JourneyOverviewComponent implements OnInit, OnDestroy {
         }
       });
     console.log("shareLink: " + this.shareLink);
+  }
+
+  goToJourneyView(id: number) {
+    if (id !== undefined) {
+      this.router.navigate(["journeyView", {id: id}])
+    }
   }
 }

@@ -12,7 +12,7 @@ import { SharedJourney } from 'src/app/dtos/SharedJourney';
 })
 export class JourneyService extends ABaseService {
   private readonly journeyUrlBase = "/journey";
-  private readonly sharedUrlBase = "/s";
+  private readonly shareUrlPart = "/s";
 
   private readonly httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -134,7 +134,7 @@ export class JourneyService extends ABaseService {
    * @returns the Journey gotten from the URL
    */
   getJourneyFromSharedJourney(sharedJourney: SharedJourney): Observable<Journey> {
-    const url = sharedJourney.url;
+    const url = this.shareUrlPart + "/" + sharedJourney.uuid;
 
     return this.http.get<Journey>(url)
     .pipe(

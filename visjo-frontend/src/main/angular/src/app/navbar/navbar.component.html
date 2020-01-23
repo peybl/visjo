@@ -21,6 +21,10 @@
                 <li *ngIf="authenticated()" class="nav-item">
                 <a class="nav-link" routerLink="/journeyView" routerLinkActive="active">Journey View</a>
                 </li>
+                <li *ngIf="!authenticated()" class="nav-item">
+                    <input [(ngModel)]="uuid" alt="enter share ID" />
+                    <button (click)="goToSharedJourneyView()">Go!</button>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li *ngIf="!authenticated(); else logoutView" class="nav-item dropdown">
