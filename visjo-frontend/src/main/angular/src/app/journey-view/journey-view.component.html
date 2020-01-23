@@ -11,8 +11,8 @@
 </div>
 <br/>
 
-<div class="selector">
-    <select id="dropdown" class="browser-default custom-select" [(ngModel)]="selectedJourneyId">
+<div class="selector" *ngIf="!journeyViaUuid">
+    <select id="dropdown" class="browser-default custom-select" [(ngModel)]="selectedJourneyIdOrUuid">
         <option selected hidden>Select a journey</option>
         <option *ngFor="let journey of journeys" value="{{journey.id}}">{{journey.name}}</option>
     </select>
@@ -27,7 +27,7 @@
 
             <div *ngFor="let image of imagesOfJourney$ | async" (click)="focusImage(image)">
                 <div class="info-container">
-                <img class="thumbnail" src="http://localhost:8080/image/{{image.id}}" alt="">
+                <img class="thumbnail" src="{{ getUrlForImage(image.id, 60) }}" alt="">
                     <div class="info-box">
                         <ul>
                             <li><span>ID</span></li>

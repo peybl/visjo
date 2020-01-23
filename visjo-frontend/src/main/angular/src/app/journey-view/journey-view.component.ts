@@ -22,12 +22,13 @@ export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
   imagesOfJourney$ : Observable<Image[]>;
   
   selectedJourneyIdOrUuid : string | number;
-  private journeyViaUuid = false;
+  journeyViaUuid = false;
   journeys: Journey[];
 
   // GPS stuff
   private map: L.Map;
   private markers : L.Marker[] = [];
+  private openMarker : L.Marker;
 
   constructor(private journeyService: JourneyService,
       private imageService: ImagesService,
@@ -111,11 +112,12 @@ export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
       accessToken: apiToken,
     }).addTo(this.map);
     L.control.scale().addTo(this.map);
+    L.control.layers().addTo(this.map);
     
   }
 
   drawMarkersOnMap(images: Image[]) : void {
-    this.markers.forEach(marker => marker.removeFrom(this.map));
+    this.clearMarkers();
     let first = true;
     this.markers = images.map(img => {
       const lat = img.latitude;
@@ -123,11 +125,14 @@ export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
       const markerCoords = L.latLng(lat, lon);
       const markerOptions : L.MarkerOptions = {draggable: false, };
       const marker = L.marker(markerCoords, markerOptions);
-      marker.bindPopup("<b>Image "+ img.id +"</b><br><img style='width:58px;height:auto;' src='http://localhost:8080/image/" + img.id + "'/>")
+      marker.bindPopup(
+        "<b>Image "+ img.id +"</b>"
+        + "<br><img style='height:auto;' src='"
+        + this.getUrlForImage(img.id, 58) + "'/>");
       marker.addTo(this.map);
       if (first) {
         this.focusImage(img);
-        marker.openPopup();
+        this.openMarker = marker.openPopup();
         first = false;
       }
       return marker;
@@ -135,7 +140,22 @@ export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   clearMarkers() {
-    // TODO
+    this.markers.forEach(marker => marker.removeFrom(this.map));
+    this.markers = [];
   }
   
+  getUrlForImage(id: string | number, width?: number): string {
+    if (this.journeyViaUuid) {
+      let url = "http://localhost:8080/s/" + this.selectedJourneyIdOrUuid + "/image/" + id;
+      if (width)
+        url += "?width=" + width;
+      return url;
+    }
+    else {
+      let url = "http://localhost:8080/image/" + id;
+      if (width)
+        url += "?width=" + width;
+      return url;
+    }
+  }
 }
