@@ -26,7 +26,7 @@ Here you can edit latitude and longitude for now. Features for editing image nam
 
 # <img alt="visjo" width="600px" height="auto" src="https://github.com/peybl/visjo/blob/master/tutorial-images/create-journey-after-upload.PNG" />
 
-If you want to upload more images you can click on "Select" and then "Upload" again to add more images to your journey.
+If you want to upload more images you can click on "Select" and then "Upload" again.
 
 After you are done with creating your journey, you can click "Journey View" in the navigation bar to see your images pinned on the map:
 
@@ -40,7 +40,7 @@ You can also switch to satellite view by clicking icon on the top right corner o
 
 You can see your journeys if you click on the "Home" button in the navigation bar. The first image of your journey will be selected for your journey overview. If you click on the image you can navigate back to journey view for that journey.
 
-Moreover, you can also click the share icon on the top left corner of the journey card to get a code for your journey which you can use to share with your others:
+Moreover, you can also click the share icon on the top left corner of the journey card to get a code for your journey which you can use to share with others:
 
 # <img alt="visjo" width="600px" height="auto" src="https://github.com/peybl/visjo/blob/master/tutorial-images/journey-share-code.PNG" />
 
