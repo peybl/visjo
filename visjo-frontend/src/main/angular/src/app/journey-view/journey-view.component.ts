@@ -102,18 +102,24 @@ export class JourneyViewComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   initializeMap() : void {
-    // const mapOptions: L.MapOptions = {maxZoom: 100};
-    this.map = L.map('map').setView({lng: 0, lat: 0}, 5);
-    console.debug("map initialized: " + this.map);
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    const mapboxUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}';
+    const commonLayerProps = {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 19,
-      id: 'mapbox/streets-v11',
       accessToken: apiToken,
-    }).addTo(this.map);
+    };
+    const streetsLayer = L.tileLayer(mapboxUrl, {
+      ...commonLayerProps,
+      id: 'mapbox/streets-v11',
+    });
+    const satelliteLayer = L.tileLayer(mapboxUrl, {
+      ...commonLayerProps,
+      id: "mapbox/satellite-v9",
+    });
+    this.map = L.map('map', { layers: [streetsLayer], zoom: 5, center: [48.20, 16.33]})
     L.control.scale().addTo(this.map);
-    L.control.layers().addTo(this.map);
-    
+    L.control.layers({"Streets": streetsLayer, "Satellite": satelliteLayer}).addTo(this.map);
+    console.debug("map initialized: " + this.map);
   }
 
   drawMarkersOnMap(images: Image[]) : void {
