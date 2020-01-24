@@ -21,9 +21,9 @@
                 <li *ngIf="authenticated()" class="nav-item">
                 <a class="nav-link" routerLink="/journeyView" routerLinkActive="active">Journey View</a>
                 </li>
-                <li *ngIf="!authenticated()" class="nav-item">
-                    <input [(ngModel)]="uuid" alt="enter share ID" />
-                    <button (click)="goToSharedJourneyView()">Go!</button>
+                <li *ngIf="!authenticated()" class="nav-item search-field">
+                    <input [(ngModel)]="uuid" placeholder="Entere share ID here" alt="enter share ID" />
+                    <button class="btn btn-light go-button" (click)="goToSharedJourneyView()">Go!</button>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
