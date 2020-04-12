@@ -1,5 +1,55 @@
 # <img alt="visjo" width="400px" height="auto" src="https://github.com/peybl/visjo/blob/master/logo-img.png" />
 
+## How-To for Visjo
+
+Once you open the application it welcomes you with the following home page:
+
+# <img alt="visjo" width="600px" height="auto" src="https://github.com/peybl/visjo/blob/master/tutorial-images/home-page.PNG" />
+
+By clicking the Sign In at the top right you can log into your account:
+
+# <img alt="visjo" width="600px" height="auto" src="https://github.com/peybl/visjo/blob/master/tutorial-images/sign-in.PNG" />
+
+If you do not have any journeys in your journey overview you'll get this page:
+
+# <img alt="visjo" width="600px" height="auto" src="https://github.com/peybl/visjo/blob/master/tutorial-images/empty-journey-overview.PNG" />
+
+As the info alert says, you can now click on Create button in the navigation bar to create your first journey:
+
+# <img alt="visjo" width="600px" height="auto" src="https://github.com/peybl/visjo/blob/master/tutorial-images/empty-create-journey.PNG" />
+
+You can enter the title for your journey and then click "Select" button to select the images you want to upload. Once your images are selected you will get the following view:
+
+# <img alt="visjo" width="600px" height="auto" src="https://github.com/peybl/visjo/blob/master/tutorial-images/create-journey-before-upload.PNG" />
+
+Here you can edit latitude and longitude for now. Features for editing image name and date has not implemented yet. Once you are ready to upload your images click the "Upload" button at the bottom. You will get an info alert if the upload is successful:
+
+# <img alt="visjo" width="600px" height="auto" src="https://github.com/peybl/visjo/blob/master/tutorial-images/create-journey-after-upload.PNG" />
+
+If you want to upload more images you can click on "Select" and then "Upload" again.
+
+After you are done with creating your journey, you can click "Journey View" in the navigation bar to see your images pinned on the map:
+
+# <img alt="visjo" width="600px" height="auto" src="https://github.com/peybl/visjo/blob/master/tutorial-images/journey-view-1.PNG" />
+
+Here you can also see the information regarding all of your images on the left scrollable menu. When you click on one of the images in this menu the map zoom into this image's location. If you have more journeys you can select them from the dropdown menu and then click "Load Journey" to load the pin marks for that journey on the map.
+
+You can also switch to satellite view by clicking icon on the top right corner of the map and selecting "satellite":
+
+# <img alt="visjo" width="600px" height="auto" src="https://github.com/peybl/visjo/blob/master/tutorial-images/journey-view-2.PNG" />
+
+You can see your journeys if you click on the "Home" button in the navigation bar. The first image of your journey will be selected for your journey overview. If you click on the image you can navigate back to journey view for that journey.
+
+Moreover, you can also click the share icon on the top left corner of the journey card to get a code for your journey which you can use to share with others:
+
+# <img alt="visjo" width="600px" height="auto" src="https://github.com/peybl/visjo/blob/master/tutorial-images/journey-share-code.PNG" />
+
+Others that want to see your journey view without logging in can just go to the home page of Visjo and enter the code in the navigation menu, then click "Go!":
+
+# <img alt="visjo" width="600px" height="auto" src="https://github.com/peybl/visjo/blob/master/tutorial-images/journey-share-logged-out.PNG" />
+
+This small tutorial sums up all the available features Visjo offers.
+
 ## Setup for Development in Unix Systems
 
 *Prerequisite:* Ubuntu 18.x, user with sudo priviledges
